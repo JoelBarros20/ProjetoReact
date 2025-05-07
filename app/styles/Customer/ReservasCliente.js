@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     containerFilters: {
         flexDirection: 'row', 
         paddingHorizontal: width * 0.04, 
-        marginBottom: height * 0.015
+        marginBottom: height * 0.015,
     },
 
     FirstContainerDataInput: {
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
         borderRadius: width * 0.02,
         borderColor: '#000',
         borderWidth: 1,
-        width: width * 0.58,
-        height: height * 0.045,
+        width: width * 0.45,
+        height: height * 0.05,
         alignItems: 'center',
         flexDirection: 'row'
     },
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         height: height * 0.05,
         backgroundColor: '#FFF',
         justifyContent: 'center',
-        paddingVertical: 0
+        paddingVertical: 0,
     },
 });
 
