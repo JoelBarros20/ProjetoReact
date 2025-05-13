@@ -1,19 +1,25 @@
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/Categories/Desportivos';
 import { MaterialIcons } from '@expo/vector-icons';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { API_ROUTES, BASE_URL } from '@/env';
-import Modal from "react-native-modal";
 import { Searchbar } from 'react-native-paper';
+import FiltroModal from '@/components/generalComponents/Categories/filtroModal';
+import ListagemFotos from '@/components/generalComponents/Categories/listagemFotos';
+import FiltrosSuperiores from '@/components/generalComponents/Categories/filtrosSuperiores'
 
 type VehicleImage = {
   id: number;
   image_url: string;
 };
 
-// Variável global para obter os tamanhos dos ecrâs
-const { width, height } = Dimensions.get('window');
+type TransmissionOption = {
+  key: string;
+  label: string;
+  icon: keyof typeof MaterialIcons.glyphMap;
+};
+
 
 export default function DesportivosPage() {
 
@@ -22,7 +28,6 @@ export default function DesportivosPage() {
   const [sortOption, setSortOption] = useState("sort"); // controlar as opções dos filtros do modal
   const [featuresOption, setfeaturesOptions] = useState("featured"); // controlar as opções dos filtros do modal
   const [numberOfSeat, setNumberOfSeats] = useState("numberSeats"); // controlar as opções dos filtros do modal
-  const [isScrolling, setIsScrolling] = useState(false); // detetar quando o scroll do Flatlist está a funcionar
   const [searchQuery, setSearchQuery] = useState(''); // valor atual do searchinput
   const [images, setImages] = useState<VehicleImage[]>([]); // armazenar as imagens vindas da API
 
@@ -56,10 +61,12 @@ export default function DesportivosPage() {
   ];
 
   // Listas para popular os flatlists dos filtros com opções
-  const transmissionOptions = [
+  const transmissionOptions: TransmissionOption[] = [
     { key: 'automatica', label: 'Automática', icon: 'drive-eta' },
     { key: 'manual', label: 'Manual', icon: 'build' },
-  ] as const;
+  ];
+
+  const [selectedTransmission, setSelectedTransmission] = useState<string>('automatica');
 
   // Função para atribuir icons às opções dos filtros
   const getFilterIcon = (cat: string, isActive: boolean) => {
@@ -110,32 +117,12 @@ export default function DesportivosPage() {
         </TouchableOpacity>
 
         {/* Filtros superiores */}
-        <View style={{ width: 250, paddingHorizontal: 4 }}>
-          <FlatList style={{}}
-            data={transmissionOptions}
-            keyExtractor={(item) => item.key}
-            horizontal
-            onScrollBeginDrag={() => setIsScrolling(true)}
-            onScrollEndDrag={() => setIsScrolling(false)}
-            onMomentumScrollEnd={() => setIsScrolling(false)}
-            bounces={false}
-            showsHorizontalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled"
-            contentContainerStyle={{ gap: 10 }}
-            ListHeaderComponent={<View style={{ width: 10 }} />}
-            renderItem={({ item }) => (
-              <View onStartShouldSetResponder={() => !isScrolling}>
-                <TouchableOpacity style={styles.ButtonFilters} disabled={isScrolling} >
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                    <MaterialIcons name={item.icon} size={16} color={'#FFF'} />
-                    <Text style={styles.ButtonFiltros}>{item.label}</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+        <FiltrosSuperiores
+          options={transmissionOptions}
+          onSelect={(key) => setSelectedTransmission(key)}
+          selectedKey={selectedTransmission}
+        />
 
-            )}
-          />
-        </View>
       </View>
 
       {/* Barra de pesquisa */}
@@ -152,131 +139,31 @@ export default function DesportivosPage() {
           />
         </View>
 
-        <Modal isVisible={isModalVisible} style={styles.modal} backdropTransitionInTiming={200} backdropTransitionOutTiming={200}
-          onBackdropPress={() => { }}>
-          <View style={styles.modalContent}>
+        {/* Componente Filtro Modal */}
+        <FiltroModal
+          visible={isModalVisible}
+          toggleModal={toggleModal}
+          clearFilters={clearFilters}
+          sortOptions={sortOptions}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+          featuresOptions={featuresOptions}
+          featuresOption={featuresOption}
+          setfeaturesOptions={setfeaturesOptions}
+          numberOfSeats={numberOfSeats}
+          numberOfSeat={numberOfSeat}
+          setNumberOfSeats={setNumberOfSeats}
+          getFilterIcon={getFilterIcon}
+        />
 
-            {/* Header do modal */}
-            <View style={styles.modalHeader}>
-              <TouchableOpacity onPress={toggleModal}>
-                <MaterialIcons name="close" size={24} color="#fff" />
-              </TouchableOpacity>
-
-              <Text style={styles.modalHeaderTitle}>Filtros</Text>
-
-              <TouchableOpacity onPress={clearFilters}>
-                <Text style={styles.modalHeaderClear}>Limpar</Text>
-              </TouchableOpacity>
-            </View>
-
-            {/* Conteúdo do modal - Sort */}
-            <View style={{ marginTop: height * 0.02 }}>
-              <Text style={[styles.optionText, { fontWeight: 'bold', marginBottom: height * 0.01 }]}>
-                Visualizar por
-              </Text>
-              <FlatList horizontal data={sortOptions} keyExtractor={(item) => item.key} showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.sortButtonsContainer}
-                renderItem={({ item }) => {
-                  const isActive = sortOption === item.key;
-
-                  return (
-                    <TouchableOpacity style={[styles.sortButton, sortOption === item.key && styles.sortButtonActive]}
-                      onPress={() => setSortOption(item.key)}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                        {getFilterIcon(item.key, isActive)}
-                        <Text style={[styles.sortButtonText, isActive && styles.sortButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit
-                          minimumFontScale={0.8}>
-                          {item.label}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  )
-                }}
-              />
-
-              {/* Conteúdo do modal - Extras */}
-              <Text style={[styles.optionText, { fontWeight: 'bold', marginBottom: height * 0.01 }]}>
-                Extras
-              </Text>
-              <FlatList horizontal data={featuresOptions} keyExtractor={(item) => item.key} showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.sortButtonsContainer}
-                renderItem={({ item }) => {
-                  const isActive = featuresOption === item.key;
-
-                  return (
-                    <TouchableOpacity style={[styles.sortButton, isActive && styles.sortButtonActive]} onPress={() => setfeaturesOptions(item.key)}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                        {getFilterIcon(item.key, isActive)}
-                        <Text style={[styles.sortButtonText, isActive && styles.sortButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit
-                          minimumFontScale={0.8}>
-                          {item.label}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  )
-                }}
-              />
-
-              {/* Conteúdo do modal - Número de Lugares */}
-              <Text style={[styles.optionText, { fontWeight: 'bold', marginBottom: height * 0.01 }]}>
-                Número de lugares
-              </Text>
-              <FlatList horizontal data={numberOfSeats} keyExtractor={(item) => item.key} showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.sortButtonsContainer}
-                renderItem={({ item }) => {
-                  const isActive = numberOfSeat === item.key;
-
-                  return (
-                    <TouchableOpacity style={[styles.sortButton, isActive && styles.sortButtonActive]} onPress={() => setNumberOfSeats(item.key)}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                        <Text style={[styles.sortButtonText, isActive && styles.sortButtonTextActive]} numberOfLines={1}
-                          adjustsFontSizeToFit
-                          minimumFontScale={0.8}>
-                          {item.label}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                }}
-              />
-            </View>
-
-            {/* Botão para aplicar os filtros do modal */}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.ContainerButtonOffers}>
-                <Text style={styles.ButtonOfertas}>Aplicar filtros</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
       </View >
 
-      {/* Lista das viaturas */}
-      <View style={{ flex: 1, paddingHorizontal: 16 }}>
-        <ScrollView horizontal={false} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: height * 0.3, width: '100%' }}
-          bounces={false}
-          scrollEnabled={true}
-          overScrollMode="never">
-          {images.map((img, index) => {
-            const imageUrl = `${BASE_URL}${img.image_url}`;
-            return (
-              <View key={index} style={styles.ContainerCards}>
-                <Image source={{ uri: imageUrl }} style={styles.Image} resizeMode="cover" />
-                <View style={{ paddingHorizontal: 10, paddingTop: 8 }}>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#333' }}>Peugeot 208</Text>
-                  <Text style={{ fontSize: 13, color: '#999' }}>ou Similar | Económico</Text>
-                </View>
-                <View style={styles.ContainerInsideCard}>
-                  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>€150.00</Text>
-                  <TouchableOpacity style={styles.ContainerInsideButton}>
-                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>Ver</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            );
-          })}
-        </ScrollView>
-      </View>
+      {/* Componente Lista dos Veiculos */}
+      <ListagemFotos
+        images={images}
+        BASE_URL={BASE_URL}
+      />
+
     </View >
   );
 }

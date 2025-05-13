@@ -1,19 +1,17 @@
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/Categories/Intermedio';
 import { MaterialIcons } from '@expo/vector-icons';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { API_ROUTES, BASE_URL } from '@/env';
-import Modal from "react-native-modal";
 import { Searchbar } from 'react-native-paper';
+import FilterModal from '@/components/generalComponents/Categories/filtroModal';
+import ListagemFotos from '@/components/generalComponents/Categories/listagemFotos'
 
 type VehicleImage = {
   id: number;
   image_url: string;
 };
-
-// Variável global para obter os tamanhos dos ecrâs
-const { width, height } = Dimensions.get('window');
 
 export default function IntermedioPage() {
 
@@ -47,7 +45,7 @@ export default function IntermedioPage() {
     { key: 'Extra 2', label: 'Extra 2' },
   ];
 
-   // Listas para popular os flatlists dos filtros com opções
+  // Listas para popular os flatlists dos filtros com opções
   const numberOfSeats = [
     { key: '4', label: '4' },
     { key: '5', label: '5' },
@@ -55,7 +53,7 @@ export default function IntermedioPage() {
     { key: '8', label: '8' },
   ];
 
-   // Listas para popular os flatlists dos filtros com opções
+  // Listas para popular os flatlists dos filtros com opções
   const transmissionOptions = [
     { key: 'automatica', label: 'Automática', icon: 'drive-eta' },
     { key: 'manual', label: 'Manual', icon: 'build' },
@@ -152,131 +150,28 @@ export default function IntermedioPage() {
           />
         </View>
 
-        <Modal isVisible={isModalVisible} style={styles.modal} backdropTransitionInTiming={200} backdropTransitionOutTiming={200}
-          onBackdropPress={() => { }}>
-          <View style={styles.modalContent}>
-
-            {/* Header do modal */}
-            <View style={styles.modalHeader}>
-              <TouchableOpacity onPress={toggleModal}>
-                <MaterialIcons name="close" size={24} color="#fff" />
-              </TouchableOpacity>
-
-              <Text style={styles.modalHeaderTitle}>Filtros</Text>
-
-              <TouchableOpacity onPress={clearFilters}>
-                <Text style={styles.modalHeaderClear}>Limpar</Text>
-              </TouchableOpacity>
-            </View>
-
-            {/* Conteúdo do modal - Sort */}
-            <View style={{ marginTop: height * 0.02 }}>
-              <Text style={[styles.optionText, { fontWeight: 'bold', marginBottom: height * 0.01 }]}>
-                Visualizar por
-              </Text>
-              <FlatList horizontal data={sortOptions} keyExtractor={(item) => item.key} showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.sortButtonsContainer}
-                renderItem={({ item }) => {
-                  const isActive = sortOption === item.key;
-
-                  return (
-                    <TouchableOpacity style={[styles.sortButton, sortOption === item.key && styles.sortButtonActive]}
-                      onPress={() => setSortOption(item.key)}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                        {getFilterIcon(item.key, isActive)}
-                        <Text style={[styles.sortButtonText, isActive && styles.sortButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit
-                          minimumFontScale={0.8}>
-                          {item.label}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  )
-                }}
-              />
-
-              {/* Conteúdo do modal - Extras */}
-              <Text style={[styles.optionText, { fontWeight: 'bold', marginBottom: height * 0.01 }]}>
-                Extras
-              </Text>
-              <FlatList horizontal data={featuresOptions} keyExtractor={(item) => item.key} showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.sortButtonsContainer}
-                renderItem={({ item }) => {
-                  const isActive = featuresOption === item.key;
-
-                  return (
-                    <TouchableOpacity style={[styles.sortButton, isActive && styles.sortButtonActive]} onPress={() => setfeaturesOptions(item.key)}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                        {getFilterIcon(item.key, isActive)}
-                        <Text style={[styles.sortButtonText, isActive && styles.sortButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit
-                          minimumFontScale={0.8}>
-                          {item.label}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  )
-                }}
-              />
-
-              {/* Conteúdo do modal - Número de Lugares */}
-              <Text style={[styles.optionText, { fontWeight: 'bold', marginBottom: height * 0.01 }]}>
-                Número de lugares
-              </Text>
-              <FlatList horizontal data={numberOfSeats} keyExtractor={(item) => item.key} showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.sortButtonsContainer}
-                renderItem={({ item }) => {
-                  const isActive = numberOfSeat === item.key;
-
-                  return (
-                    <TouchableOpacity style={[styles.sortButton, isActive && styles.sortButtonActive]} onPress={() => setNumberOfSeats(item.key)}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                        <Text style={[styles.sortButtonText, isActive && styles.sortButtonTextActive]} numberOfLines={1}
-                          adjustsFontSizeToFit
-                          minimumFontScale={0.8}>
-                          {item.label}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                }}
-              />
-            </View>
-
-            {/* Botão para aplicar os filtros do modal */}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.ContainerButtonOffers}>
-                <Text style={styles.ButtonOfertas}>Aplicar filtros</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+        {/* Componente Filtro Modal */}
+        <FilterModal
+          visible={isModalVisible}
+          toggleModal={toggleModal}
+          clearFilters={clearFilters}
+          sortOptions={sortOptions}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+          featuresOptions={featuresOptions}
+          featuresOption={featuresOption}
+          setfeaturesOptions={setfeaturesOptions}
+          numberOfSeats={numberOfSeats}
+          numberOfSeat={numberOfSeat}
+          setNumberOfSeats={setNumberOfSeats}
+          getFilterIcon={getFilterIcon}
+        />
       </View >
 
-      {/* Lista das viaturas */}
-      <View style={{ flex: 1, paddingHorizontal: 16 }}>
-        <ScrollView horizontal={false} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: height * 0.3, width: '100%' }}
-          bounces={false}
-          scrollEnabled={true}
-          overScrollMode="never">
-          {images.map((img, index) => {
-            const imageUrl = `${BASE_URL}${img.image_url}`;
-            return (
-              <View key={index} style={styles.ContainerCards}>
-                <Image source={{ uri: imageUrl }} style={styles.Image} resizeMode="cover" />
-                <View style={{ paddingHorizontal: 10, paddingTop: 8 }}>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#333' }}>Peugeot 208</Text>
-                  <Text style={{ fontSize: 13, color: '#999' }}>ou Similar | Económico</Text>
-                </View>
-                <View style={styles.ContainerInsideCard}>
-                  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>€150.00</Text>
-                  <TouchableOpacity style={styles.ContainerInsideButton}>
-                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>Ver</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            );
-          })}
-        </ScrollView>
-      </View>
+      <ListagemFotos
+        images={images}
+        BASE_URL={BASE_URL}
+      />
     </View >
   );
 }

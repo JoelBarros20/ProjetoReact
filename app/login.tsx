@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useAuthGuard from '@/hooks/useAuthGuard';
 import { View, Text, TextInput, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Checkbox } from 'react-native-paper';
@@ -8,7 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './styles/LoginScreenStyles';
+import styles from './styles/OutrasPaginas/LoginScreenStyles';
 import BackgroundSVG from '../assets/svgs/login_layout.svg';
 import { API_ROUTES } from '@/env';
 

@@ -2,10 +2,12 @@ import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
-import styles from '../styles/ViaturasDetalhes'
+import styles from '../styles/OutrasPaginas/ViaturasDetalhes'
+import { useRouter } from 'expo-router';
 
 export default function ViaturasDetalhesScreen() {
 
+  const router = useRouter();
   const navigation = useNavigation();
 
   return (
@@ -73,7 +75,8 @@ export default function ViaturasDetalhesScreen() {
           <Text style={styles.sectionTitle}>190.00</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.ContainerButtonOffers}>
+          <TouchableOpacity style={styles.ContainerButtonOffers}
+            onPress={() => router.push('../payments/confirmpayments')}>
             <Text style={styles.ButtonOfertas}>Reservar</Text>
           </TouchableOpacity>
         </View>

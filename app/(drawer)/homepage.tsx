@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import useAuthGuard from '@/hooks/useAuthGuard';
-import styles from '../styles/Homepage';
+import styles from '../styles/OutrasPaginas/Homepage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { API_ROUTES, BASE_URL } from '@/env';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';

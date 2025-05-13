@@ -5,7 +5,7 @@ import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './styles/LoginScreenStyles';
+import styles from './styles/OutrasPaginas/LoginScreenStyles';
 import BackgroundSVG from '../assets/svgs/login_layout.svg';
 import { ScrollView } from 'react-native';
 import { API_ROUTES } from '@/env';

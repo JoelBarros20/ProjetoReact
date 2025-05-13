@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './styles/InitialScreen';
+import styles from './styles/OutrasPaginas/InitialScreen';
 
 export default function WelcomeScreen() {
   const [assets] = useAssets([require("../assets/images/login_image.jpg")]);

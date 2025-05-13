@@ -5,7 +5,7 @@ import { Ionicons, MaterialIcons, MaterialCommunityIcons, Feather } from '@expo/
 import { BlurView } from 'expo-blur';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import styles from '../../app/styles/Drawer';
+import styles from '../../app/styles/OutrasPaginas/Drawer';
 import { useDrawerStatus } from '@react-navigation/drawer';
 
 export default function CustomDrawerContent(props: any) {

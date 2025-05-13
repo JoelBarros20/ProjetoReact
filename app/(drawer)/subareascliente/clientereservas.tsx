@@ -76,13 +76,13 @@ export default function ClienteReservasPage() {
 
               {/* Dropdown */}
               <View style={{ flex: 1 }}>
-
                 <Menu
                   visible={visible}
                   onDismiss={() => setVisible(false)}
                   anchor={
-                    <Button onPress={() => setVisible(true)} mode="outlined" textColor='#000' labelStyle={{fontWeight:'normal'}}>
-                      {selectedStatus || 'Selecione status'}
+                    <Button onPress={() => setVisible(true)} mode="outlined" textColor='#000' labelStyle={{ fontWeight: 'normal' }}
+                      style={styles.dropdownButton}>
+                      {selectedStatus || 'Selecione estado'}
                     </Button>
                   }
                 >
@@ -90,7 +90,6 @@ export default function ClienteReservasPage() {
                   <Menu.Item onPress={() => { setSelectedStatus('Concluída'); setVisible(false) }} title="Concluída" />
                   <Menu.Item onPress={() => { setSelectedStatus('Pendente'); setVisible(false) }} title="Pendente" />
                 </Menu>
-
               </View>
             </View>
           </View>
@@ -102,6 +101,8 @@ export default function ClienteReservasPage() {
                 placeholder="Pesquisar viaturas"
                 value={searchQuery}
                 inputStyle={{ fontSize: 14, paddingBottom: height * 0.021, textAlignVertical: 'center' }}
+                placeholderTextColor="#666" // 🔹 torna o placeholder visível
+                iconColor="#666"    
                 onChangeText={(query) => setSearchQuery(query)}
                 style={styles.searchBar}
               />
