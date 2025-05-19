@@ -1,13 +1,13 @@
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/Categories/Comerciais';
 import { MaterialIcons } from '@expo/vector-icons';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { API_ROUTES, BASE_URL } from '@/env';
 import { Searchbar } from 'react-native-paper';
 import FilterModal from '@/components/generalComponents/Categories/filtroModal';
-import ListagemFotos from '@/components/generalComponents/Categories/listagemFotos'
-import FiltrosSuperiores from '@/components/generalComponents/Categories/filtrosSuperiores'
+import ListagemFotos from '@/components/generalComponents/Categories/listagemFotos';
+import FiltrosSuperiores from '@/components/generalComponents/Categories/filtrosSuperiores';
+import SideMenu from '@/components/generalComponents/Menu/SideMenu';
 
 type VehicleImage = {
   id: number;
@@ -31,7 +31,6 @@ export default function ComerciaisPage() {
   const [searchQuery, setSearchQuery] = useState(''); // valor atual do searchinput
   const [images, setImages] = useState<VehicleImage[]>([]); // armazenar as imagens vindas da API
 
-  const navigation = useNavigation();
   const toggleModal = () => { setModalVisible(!isModalVisible) };
   const onChangeSearch = (query: string) => setSearchQuery(query);
 
@@ -95,13 +94,10 @@ export default function ComerciaisPage() {
   }, []);
 
   return (
+
     <View style={styles.ContainerMainPage}>
       <View style={styles.HeaderPage}>
-        <View style={styles.SideMenu}>
-          <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-            <MaterialIcons name="menu" size={30} color="#fff" />
-          </TouchableOpacity>
-        </View>
+        <SideMenu />
         <Text style={styles.MainTitle}> Viaturas Comerciais </Text>
         <View style={styles.spacer} />
       </View>

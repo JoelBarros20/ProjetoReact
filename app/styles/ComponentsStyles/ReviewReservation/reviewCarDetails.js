@@ -3,129 +3,57 @@ import { StyleSheet, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFF',
+    MainContainer: {
+        backgroundColor: '#FFF6F6',
+        borderRadius: width * 0.04,
+        padding: width * 0.04,
+        marginBottom: height * 0.025,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 5,
     },
 
-    HeaderPage: {
-        width: '100%',
-        height: height * 0.09,
-        backgroundColor: '#b30000',
+    SecondContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: width * 0.04,
         justifyContent: 'space-between',
-        marginBottom: height * 0.02
-    },
-
-    SideMenu: {
-        width: width * 0.08,
-        alignItems: 'flex-start',
-    },
-
-    title: {
-        color: '#FFF',
-        fontSize: width * 0.05,
-        fontFamily: 'Poppins-Bold',
-        textAlign: 'center',
-    },
-
-    spacer: {
-        width: width * 0.08,
-    },
-
-    cardContainer: {
-        backgroundColor: '#FFF6F6',
-        borderRadius: 16,
-        padding: 16,
-        marginBottom: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-
-    carBox: {
-        backgroundColor: '#FFF6F6',
-        borderRadius: 16,
-        padding: 16,
-        flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 30,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 5,
     },
 
-    imagePlaceholder: {
-        width: 80,
-        height: 80,
-        borderRadius: 12,
-        backgroundColor: '#444',
-        marginRight: 16,
-    },
-
-    carInfoText: {
-        flex: 1,
-    },
-
-    carTitle: {
-        color: '#000',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-
-    carSubtitle: {
-        color: '#000',
-        fontSize: 12,
-        marginVertical: 2,
-    },
-
-    carDays: {
-        color: '#000',
-        fontSize: 14,
-    },
-
-    sectionTitle: {
-        color: '#000',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 12,
-    },
-
-    label: {
-        color: '#000',
-        marginBottom: 4,
-    },
-
-    optional: {
-        color: '#000',
-    },
-
-    input: {
-        backgroundColor: '#FFF',
-        borderRadius: 10,
-        paddingVertical: 12,
-        paddingHorizontal: 16,
-        borderColor: '#000',
-        borderWidth: 1,
-        color: '#fff',
-        marginBottom: 20,
-    },
-
-    fieldBlock: {
-        marginBottom: 10,
-    },
-
-    inlineGroup: {
+    ThirdContainer: {
         flexDirection: 'row',
-        gap: 12,
     },
 
+    ImageStyle: {
+        width: width * 0.18,
+        height: width * 0.18,
+        borderRadius: width * 0.03,
+        marginRight: width * 0.03,
+    },
+
+    Text: {
+        color: '#000',
+        fontSize: width * 0.035,
+    },
+
+    TextBold: {
+        color: '#000',
+        fontWeight: 'bold',
+        fontSize: width * 0.04,
+    },
+
+    TextMargin: {
+        color: '#000',
+        marginBottom: height * 0.015,
+        fontSize: width * 0.035,
+    },
+
+    AnimatedContainer: {
+        borderTopWidth: 1,
+        borderTopColor: '#444',
+        paddingTop: height * 0.015,
+    },
 });
 
-export default styles
+export default styles;

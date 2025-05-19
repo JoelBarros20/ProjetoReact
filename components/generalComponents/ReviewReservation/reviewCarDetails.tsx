@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, Platform, UIManager, Image, Animated, Easing } from 'react-native';
+import { View, Text, TouchableOpacity, Platform, UIManager, Image, Animated, Easing, LayoutChangeEvent } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from '../../../app/styles/ComponentsStyles/ReviewReservation/reviewCarDetails';
 
@@ -9,43 +9,34 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 
 export default function VehicleCard() {
     const [expanded, setExpanded] = useState(false);
+    const [contentHeight, setContentHeight] = useState(0);
     const animation = useRef(new Animated.Value(0)).current;
 
     const toggleExpanded = () => {
-        const toValue = expanded ? 0 : 1;
-        setExpanded(!expanded);
+        const toValue = expanded ? 0 : contentHeight;
 
         Animated.timing(animation, {
             toValue,
             duration: 300,
             easing: Easing.out(Easing.ease),
-            useNativeDriver: false,
+            useNativeDriver: false, // necessário para animar height
         }).start();
+
+        setExpanded(!expanded);
     };
 
-    // Interpolação da altura e opacidade
-    const heightInterpolate = animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 250], // altura máxima estimada do conteúdo expandido
-    });
-
-    const opacityInterpolate = animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 1],
-    });
-
     return (
-        <View style={styles.cardContainer}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row' }}>
+        <View style={styles.MainContainer}>
+            <View style={styles.SecondContainer}>
+                <View style={styles.ThirdContainer}>
                     <Image
                         source={{ uri: 'https://cdn.group.renault.com/ren/master/renault-new-cars/renault-twingo-e-tech-electric/bdc-renault-twingo-e-tech-electric.png' }}
-                        style={{ width: 70, height: 70, borderRadius: 12, marginRight: 12 }}
+                        style={styles.ImageStyle}
                     />
                     <View>
-                        <Text style={{ color: '#000', fontWeight: 'bold' }}>Renault Twingo</Text>
-                        <Text style={{ color: '#000' }}>or similar | MDMR</Text>
-                        <Text style={{ color: '#000' }}>3 rental days</Text>
+                        <Text style={styles.TextBold}>Renault Twingo</Text>
+                        <Text style={styles.Text}>or similar | MDMR</Text>
+                        <Text style={styles.Text}>3 rental days</Text>
                     </View>
                 </View>
 
@@ -54,41 +45,83 @@ export default function VehicleCard() {
                 </TouchableOpacity>
             </View>
 
-            {/* Conteúdo animado */}
-            <Animated.View style={{ height: heightInterpolate, overflow: 'hidden', opacity: opacityInterpolate, marginTop: 16 }}>
-                <View style={{ borderTopWidth: 1, borderTopColor: '#444', paddingTop: 12 }}>
-                    <View style={{ flexDirection: 'row', marginBottom: 8 }}>
-                        <MaterialCommunityIcons name="store-marker" size={20} color="#000" style={{ marginRight: 8 }} />
-                        <View>
-                            <Text style={{ color: '#000' }}>Pickup</Text>
-                            <Text style={{ color: '#000' }}>Viseu</Text>
-                            <Text style={{ color: '#000' }}>Thu 15/05/2025, 12:00 PM</Text>
+            <Animated.View style={{ height: animation, overflow: 'hidden' }}>
+                <View
+                    style={[styles.AnimatedContainer, { position: 'absolute', top: 0, left: 0, right: 0, opacity: 0 }]}
+                    onLayout={(e: LayoutChangeEvent) => setContentHeight(e.nativeEvent.layout.height)}
+                >
+                    {/* Medimos a altura aqui mas está invisível */}
+                    <View>
+                        <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+                            <MaterialCommunityIcons name="store-marker" size={20} color="#000" style={{ marginRight: 8 }} />
+                            <View>
+                                <Text style={styles.Text}>Pickup</Text>
+                                <Text style={styles.Text}>Viseu</Text>
+                                <Text style={styles.Text}>Thu 15/05/2025, 12:00 PM</Text>
+                            </View>
                         </View>
-                    </View>
 
-                    <View style={{ flexDirection: 'row', marginBottom: 12 }}>
-                        <MaterialCommunityIcons name="store-marker" size={20} color="#000" style={{ marginRight: 8 }} />
-                        <View>
-                            <Text style={{ color: '#000' }}>Return</Text>
-                            <Text style={{ color: '#000' }}>Viseu</Text>
-                            <Text style={{ color: '#000' }}>Sun 18/05/2025, 12:00 PM</Text>
+                        <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+                            <MaterialCommunityIcons name="store-marker" size={20} color="#000" style={{ marginRight: 8 }} />
+                            <View>
+                                <Text style={styles.Text}>Return</Text>
+                                <Text style={styles.Text}>Viseu</Text>
+                                <Text style={styles.Text}>Sun 18/05/2025, 12:00 PM</Text>
+                            </View>
                         </View>
+
+                        <Text style={styles.TextBold}>Payment option</Text>
+                        <Text style={styles.TextMargin}>
+                            Stay flexible - Pay at pick-up, free cancellation and rebooking any time before pick-up time
+                        </Text>
+
+                        <Text style={styles.TextBold}>Included as standard</Text>
+                        <Text style={styles.TextMargin}>Third party insurance</Text>
+
+                        <Text style={styles.TextBold}>Mileage</Text>
+                        <Text style={styles.TextMargin}>Unlimited kilometers</Text>
+
+                        <Text style={styles.TextBold}>Protection</Text>
+                        <Text style={styles.Text}>All Inclusive Protection - No deductible</Text>
                     </View>
-
-                    <Text style={{ color: '#000', fontWeight: 'bold' }}>Payment option</Text>
-                    <Text style={{ color: '#000', marginBottom: 12 }}>
-                        Stay flexible - Pay at pick-up, free cancellation and rebooking any time before pick-up time
-                    </Text>
-
-                    <Text style={{ color: '#000', fontWeight: 'bold' }}>Included as standard</Text>
-                    <Text style={{ color: '#000', marginBottom: 12 }}>Third party insurance</Text>
-
-                    <Text style={{ color: '#000', fontWeight: 'bold' }}>Mileage</Text>
-                    <Text style={{ color: '#000', marginBottom: 12 }}>Unlimited kilometers</Text>
-
-                    <Text style={{ color: '#000', fontWeight: 'bold' }}>Protection</Text>
-                    <Text style={{ color: '#000' }}>All Inclusive Protection - No deductible</Text>
                 </View>
+
+                {/* Conteúdo real que será mostrado */}
+                {expanded && (
+                    <View style={styles.AnimatedContainer}>
+                        <View style={{ flexDirection: 'row', marginBottom: 8 }}>
+                            <MaterialCommunityIcons name="store-marker" size={20} color="#000" style={{ marginRight: 8 }} />
+                            <View>
+                                <Text style={styles.Text}>Pickup</Text>
+                                <Text style={styles.Text}>Viseu</Text>
+                                <Text style={styles.Text}>Thu 15/05/2025, 12:00 PM</Text>
+                            </View>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+                            <MaterialCommunityIcons name="store-marker" size={20} color="#000" style={{ marginRight: 8 }} />
+                            <View>
+                                <Text style={styles.Text}>Return</Text>
+                                <Text style={styles.Text}>Viseu</Text>
+                                <Text style={styles.Text}>Sun 18/05/2025, 12:00 PM</Text>
+                            </View>
+                        </View>
+
+                        <Text style={styles.TextBold}>Payment option</Text>
+                        <Text style={styles.TextMargin}>
+                            Stay flexible - Pay at pick-up, free cancellation and rebooking any time before pick-up time
+                        </Text>
+
+                        <Text style={styles.TextBold}>Included as standard</Text>
+                        <Text style={styles.TextMargin}>Third party insurance</Text>
+
+                        <Text style={styles.TextBold}>Mileage</Text>
+                        <Text style={styles.TextMargin}>Unlimited kilometers</Text>
+
+                        <Text style={styles.TextBold}>Protection</Text>
+                        <Text style={styles.Text}>All Inclusive Protection - No deductible</Text>
+                    </View>
+                )}
             </Animated.View>
         </View>
     );

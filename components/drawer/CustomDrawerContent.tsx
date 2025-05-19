@@ -109,10 +109,14 @@ export default function CustomDrawerContent(props: any) {
 
                     <Animated.View style={{ paddingLeft: 60, overflow: 'hidden', height: animation }}>
                         {categorias.map((cat, index) => (
-                            <TouchableOpacity key={index} onPress={() => {
-                                router.push(categoriaSlugs[cat as keyof typeof categoriaSlugs] as any);
-                            }}
-                                style={{ paddingVertical: 8, flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                            <TouchableOpacity
+                                key={index}
+                                onPress={ async () => {
+                                    await AsyncStorage.removeItem('lastRoute')
+                                    router.replace(`/(drawer)/${categoriaSlugs[cat as keyof typeof categoriaSlugs]}`);
+                                }}
+                                style={{ paddingVertical: 8, flexDirection: 'row', alignItems: 'center', gap: 6 }}
+                            >
                                 {getCategoriaIcon(cat)}
                                 <Text style={{ color: '#fff', fontSize: 14 }}>{cat}</Text>
                             </TouchableOpacity>

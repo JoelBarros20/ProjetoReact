@@ -13,7 +13,7 @@ export default function useAuthGuard() {
         await new Promise((resolve) => setTimeout(resolve, 300));
 
         const token = await AsyncStorage.getItem('token');
-        console.log("Token no useAuthGuard:", token);
+       // console.log("Token no useAuthGuard:", token);
 
         if (!token) {
           router.replace('/login');

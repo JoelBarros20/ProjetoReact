@@ -8,6 +8,7 @@ import { Searchbar } from 'react-native-paper';
 import FiltroModal from '@/components/generalComponents/Categories/filtroModal';
 import ListagemFotos from '@/components/generalComponents/Categories/listagemFotos';
 import FiltrosSuperiores from '@/components/generalComponents/Categories/filtrosSuperiores'
+import SideMenu from '@/components/generalComponents/Menu/SideMenu';
 
 type VehicleImage = {
   id: number;
@@ -97,11 +98,7 @@ export default function DesportivosPage() {
   return (
     <View style={styles.Container}>
       <View style={styles.backgroundImage}>
-        <View style={styles.Menu}>
-          <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-            <MaterialIcons name="menu" size={30} color="#fff" />
-          </TouchableOpacity>
-        </View>
+        <SideMenu />
         <Text style={styles.Title}> Viaturas Desportivas </Text>
         <View style={styles.spacer} />
       </View>

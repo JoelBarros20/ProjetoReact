@@ -26,7 +26,6 @@ export default function RootLayout() {
       const sessionFlag = await SecureStore.getItemAsync("session_started");
 
       if (!sessionFlag) {
-        console.log("🧹 App iniciado do zero. Limpando sessão...");
         await AsyncStorage.removeItem("token");
         await AsyncStorage.removeItem("lastRoute");
         await SecureStore.setItemAsync("session_started", "true");
@@ -36,7 +35,7 @@ export default function RootLayout() {
       const lastRoute = await AsyncStorage.getItem("lastRoute");
 
       console.log("Token:", token);
-      console.log("lastRoute:", lastRoute);
+      //console.log("lastRoute:", lastRoute);
 
       if (token && lastRoute && lastRoute !== "login") {
         setInitialRoute(`(drawer)/${lastRoute}`);
@@ -54,7 +53,12 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack initialRouteName="load" screenOptions={{ headerShown: false }}>
+      <Stack
+        initialRouteName="load"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Screen name="load" />
         <Stack.Screen name="(drawer)" />
         <Stack.Screen name="login" />

@@ -1,11 +1,8 @@
 import { Drawer } from 'expo-router/drawer';
 import SessionWrapper from '@/components/sessionWrapper';
-import React from 'react';
 import CustomDrawerContent from '../../components/drawer/CustomDrawerContent';
 
-
 export default function DrawerLayout() {
-
   return (
     <SessionWrapper>
       <Drawer
@@ -24,7 +21,9 @@ export default function DrawerLayout() {
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
         <Drawer.Screen name="homepage" options={{ title: 'Home' }} />
-        <Drawer.Screen name="subareascliente/historicoreservas" options={{ title: 'Histórico' }} />
+        <Drawer.Screen name="categories" options={{ title: 'Categorias' }} />
+        <Drawer.Screen name="viaturasdetalhes" options={{ title: 'Detalhes' }} />
+
       </Drawer>
     </SessionWrapper>
   );

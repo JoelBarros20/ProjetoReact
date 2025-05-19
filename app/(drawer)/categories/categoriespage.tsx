@@ -2,7 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
-import styles from '../styles/OutrasPaginas/CategoriesPage';
+import styles from '../../styles/OutrasPaginas/CategoriesPage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
 
 const categories = [
     { key: '1', label: 'Comerciais', icon: 'local-shipping', iconLib: 'MaterialIcons', route: 'categories/comerciais' },
@@ -12,11 +14,13 @@ const categories = [
     { key: '5', label: 'SUV', icon: 'car-lifted-pickup', iconLib: 'MaterialCommunityIcons', route: 'categories/suv' },
     { key: '6', label: 'Desportivo', icon: 'car-sport', iconLib: 'Ionicons', route: 'categories/desportivos' },
     { key: '7', label: 'Premium', icon: 'workspace-premium', iconLib: 'MaterialIcons', route: 'categories/premium' },
-];
+] as const;
+
 
 export default function CategoriesGrid() {
 
     const navigation = useNavigation();
+    const router = useRouter();
 
     return (
         <View style={styles.Container}>
@@ -38,7 +42,10 @@ export default function CategoriesGrid() {
                             : MaterialIcons;
 
                         return (
-                            <TouchableOpacity style={styles.gridItem} onPress={() => navigation.navigate(item.route as never)} >
+                            <TouchableOpacity style={styles.gridItem} onPress={async () => {
+                                await AsyncStorage.setItem('lastRoute', item.route);
+                                router.push(item.route);
+                            }}>
                                 <IconComponent name={item.icon} size={40} color="#b30000" />
                                 <Text style={styles.gridText}>{item.label}</Text>
                             </TouchableOpacity>

@@ -5,7 +5,7 @@ const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#111'
+        backgroundColor: '#FFF'
     },
     spacer: {
         width: width * 0.08,
@@ -30,16 +30,13 @@ const styles = StyleSheet.create({
     },
     infoSection: {
         padding: width * 0.05,
-        backgroundColor: '#222'
+        backgroundColor: '#F5F4F9'
     },
-    greenText: {
-        color: 'green',
-        marginBottom: height * 0.01
-    },
+
     title: {
         fontSize: 22,
         fontWeight: 'bold',
-        color: '#fff',
+        color: '#111',
         marginBottom: height * 0.007
     },
     subtitle: {
@@ -59,21 +56,21 @@ const styles = StyleSheet.create({
         marginVertical: height * 0.006
     },
     specText: {
-        color: '#fff',
+        color: '#111',
         marginLeft: width * 0.015
     },
     sectionBox: {
         padding: width * 0.05,
-        backgroundColor: '#111'
+        backgroundColor: '#FFF'
     },
     sectionTitle: {
-        color: '#fff',
+        color: '#111',
         fontSize: 22,
         fontWeight: 'bold',
         marginLeft: width * 0.01
     },
     optionTitle: {
-        color: '#fff',
+        color: '#111',
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: height * 0.02,

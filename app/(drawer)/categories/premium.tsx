@@ -7,6 +7,7 @@ import { API_ROUTES, BASE_URL } from '@/env';
 import { Searchbar } from 'react-native-paper';
 import FilterModal from '@/components/generalComponents/Categories/filtroModal';
 import ListagemFotos from '@/components/generalComponents/Categories/listagemFotos'
+import SideMenu from '@/components/generalComponents/Menu/SideMenu';
 
 type VehicleImage = {
   id: number;
@@ -88,11 +89,7 @@ export default function PremiumPage() {
   return (
     <View style={styles.Container}>
       <View style={styles.backgroundImage}>
-        <View style={styles.Menu}>
-          <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-            <MaterialIcons name="menu" size={30} color="#fff" />
-          </TouchableOpacity>
-        </View>
+        <SideMenu />
         <Text style={styles.Title}> Viaturas Premium </Text>
         <View style={styles.spacer} />
       </View>

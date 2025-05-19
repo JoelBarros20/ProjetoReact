@@ -44,19 +44,19 @@ export default function ViaturasDetalhesScreen() {
         </View>
         <View style={styles.specsContainer}>
           <View style={styles.specItem}>
-            <Ionicons name="person" size={18} color={'#FFF'} />
+            <Ionicons name="person" size={18} color={'#111'} />
             <Text style={styles.specText}>Dados Viatura</Text>
           </View>
           <View style={styles.specItem}>
-            <MaterialIcons name="local-gas-station" size={18} color={'#FFF'} />
+            <MaterialIcons name="local-gas-station" size={18} color={'#111'} />
             <Text style={styles.specText}>Dados Viatura</Text>
           </View>
           <View style={styles.specItem}>
-            <Ionicons name="bag" size={18} color={'#FFF'} />
+            <Ionicons name="bag" size={18} color={'#111'} />
             <Text style={styles.specText}>Dados Viatura</Text>
           </View>
           <View style={styles.specItem}>
-            <MaterialCommunityIcons name="car-shift-pattern" size={18} color={'#FFF'} />
+            <MaterialCommunityIcons name="car-shift-pattern" size={18} color={'#111'} />
             <Text style={styles.specText}>Dados Viatura</Text>
           </View>
           <View style={styles.specItem}>
@@ -70,7 +70,7 @@ export default function ViaturasDetalhesScreen() {
       <View style={styles.sectionBox}>
         <View style={styles.containerPrice}>
           <View>
-            <FontAwesome name="euro" size={22} color="#FFF" />
+            <FontAwesome name="euro" size={22} color="#111" />
           </View>
           <Text style={styles.sectionTitle}>190.00</Text>
         </View>
