@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
-import { View, TouchableOpacity, ImageBackground, Text, ScrollView, Image, Dimensions } from 'react-native';
+import { View, TouchableOpacity, ImageBackground, Text, ScrollView, Image, Dimensions, Animated } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -10,6 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { API_ROUTES, BASE_URL } from '@/env';
 import { FlatList } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
+import { ActivityIndicator } from 'react-native';
 import DatePickers from '@/components/generalComponents/homepage/DatePicker'
 
 SplashScreen.preventAutoHideAsync();
@@ -39,6 +40,7 @@ export default function HomePageScreen() {
   const [horaFim, setHoraFim] = useState<string | null>(null);
   const [pickerType, setPickerType] = useState<'inicio' | 'fim' | 'horaInicio' | 'horaFim' | null>(null);
   const [images, setImages] = useState<VehicleImage[]>([]);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const formatTime = (date: Date) => {
     const hours = date.getHours().toString().padStart(2, '0');
@@ -72,7 +74,33 @@ export default function HomePageScreen() {
       .catch(() => { });
   }, []);
 
-  if (!fontsLoaded || loading || checkingToken) return null;
+  useEffect(() => {
+    if (!fontsLoaded || loading || checkingToken) {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      fadeAnim.setValue(0);
+    }
+  }, [fontsLoaded, loading, checkingToken]);
+
+  if (!fontsLoaded || loading || checkingToken) {
+    return (
+      <Animated.View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#fff',
+          opacity: fadeAnim,
+        }}
+      >
+        <ActivityIndicator size="large" color="#000" />
+      </Animated.View>
+    );
+  }
 
   return (
 
