@@ -7,6 +7,7 @@ import * as SecureStore from "expo-secure-store";
 import { ThemeProvider } from "@react-navigation/native";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { DarkTheme, DefaultTheme } from "@react-navigation/native";
+import { ActivityIndicator, View } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,8 +38,8 @@ export default function RootLayout() {
       console.log("Token:", token);
       //console.log("lastRoute:", lastRoute);
 
-      if (token && lastRoute && lastRoute !== "login") {
-        setInitialRoute(`(drawer)/${lastRoute}`);
+      if (token) {
+        setInitialRoute("(drawer)");
       } else {
         setInitialRoute("initial_page");
       }
@@ -49,17 +50,23 @@ export default function RootLayout() {
     prepare();
   }, [loaded]);
 
-  if (!loaded || initialRoute === null) return null;
+  if (!loaded || initialRoute === null) {
+    return (
+      <View style={{ flex: 1, backgroundColor: "#fff", justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack
-        initialRouteName="load"
+        initialRouteName={initialRoute}
         screenOptions={{
           headerShown: false,
+          animation: "none",
         }}
       >
-        <Stack.Screen name="load" />
         <Stack.Screen name="(drawer)" />
         <Stack.Screen name="login" />
         <Stack.Screen name="signin" />

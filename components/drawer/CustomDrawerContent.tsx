@@ -4,9 +4,11 @@ import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
+import { useRouter, usePathname } from 'expo-router';
 import styles from '../../app/styles/OutrasPaginas/Drawer';
 import { useDrawerStatus } from '@react-navigation/drawer';
+
+
 
 export default function CustomDrawerContent(props: any) {
 
@@ -56,6 +58,8 @@ export default function CustomDrawerContent(props: any) {
         }
     };
 
+    const pathname = usePathname();
+
     const getCategoriaIcon = (cat: string) => {
         switch (cat) {
             case 'Comerciais': return <MaterialIcons name="local-shipping" size={18} color="#fff" />;
@@ -94,10 +98,16 @@ export default function CustomDrawerContent(props: any) {
 
             <DrawerContentScrollView {...props} contentContainerStyle={{ paddingTop: 0 }}>
                 <View style={{ marginTop: 5, marginLeft: -5 }}>
-                    <DrawerItem label="Homepage" icon={() => <Feather name="home" size={20} color="#fff" />}
+                    <DrawerItem
+                        label="Homepage"
+                        icon={() => <Feather name="home" size={20} color="#fff" />}
                         labelStyle={{ color: '#fff' }}
                         onPress={() => {
-                            props.navigation.navigate('homepage');
+                            if (pathname === '/') {
+                                props.navigation.closeDrawer(); // Só fecha o Drawer, não faz refresh
+                            } else {
+                                router.replace('/');
+                            }
                         }}
                     />
 
@@ -111,9 +121,9 @@ export default function CustomDrawerContent(props: any) {
                         {categorias.map((cat, index) => (
                             <TouchableOpacity
                                 key={index}
-                                onPress={ async () => {
+                                onPress={async () => {
                                     await AsyncStorage.removeItem('lastRoute')
-                                    router.replace(`/(drawer)/${categoriaSlugs[cat as keyof typeof categoriaSlugs]}`);
+                                    router.replace(`/${categoriaSlugs[cat as keyof typeof categoriaSlugs]}`);
                                 }}
                                 style={{ paddingVertical: 8, flexDirection: 'row', alignItems: 'center', gap: 6 }}
                             >

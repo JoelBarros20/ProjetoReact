@@ -119,7 +119,7 @@ export default function HomePageScreen() {
                   <View style={styles.ContainerInsideCard}>
                     <Text style={{ fontSize: 18, fontWeight: 'bold' }}>€150.00</Text>
                     <TouchableOpacity style={styles.ContainerInsideButton}
-                      onPress={() => router.push('/viaturasdetalhes')}>
+                      onPress={() => router.push('/(drawer)/Stack/viaturasdetalhes')}>
                       <Text style={{ color: '#fff', fontWeight: 'bold' }}>Ver</Text>
                     </TouchableOpacity>
                   </View>
