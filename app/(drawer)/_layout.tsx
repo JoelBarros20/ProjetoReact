@@ -1,6 +1,7 @@
 import { Drawer } from 'expo-router/drawer';
+
 import SessionWrapper from '@/components/sessionWrapper';
-import CustomDrawerContent from '../../components/drawer/CustomDrawerContent';
+import CustomDrawerContent from '@/components/drawer/CustomDrawerContent';
 
 export default function DrawerLayout() {
   return (

@@ -3,11 +3,12 @@ import { View, Text, TouchableOpacity, Image, Animated, Easing } from 'react-nat
 import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter, usePathname } from 'expo-router';
-import styles from '../../app/styles/OutrasPaginas/Drawer';
 import { useDrawerStatus } from '@react-navigation/drawer';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import styles from '@/app/styles/OutrasPaginas/Drawer';
 
 
 export default function CustomDrawerContent(props: any) {

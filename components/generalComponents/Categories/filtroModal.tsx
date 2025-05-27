@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Dimensions, FlatList } from 'react-native';
-import Modal from "react-native-modal";
 import { MaterialIcons } from '@expo/vector-icons';
-import styles from '@/app/styles/ComponentsStyles/Categories/filtroModal';
 
+import Modal from "react-native-modal";
+
+import styles from '@/app/styles/ComponentsStyles/Categories/filtroModal';
 
 const { height } = Dimensions.get('window');
 

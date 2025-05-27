@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+
 import styles from '@/app/styles/ComponentsStyles/Categories/filtrosSuperiores';
 
 type TransmissionOption = {

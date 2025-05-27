@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
   backgroundImage: {
     width: '100%',
     height: height * 0.65,
-    resizeMode: 'cover',
     borderBottomLeftRadius: width * 0.1,
     borderBottomRightRadius: width * 0.1,
     overflow: 'hidden',

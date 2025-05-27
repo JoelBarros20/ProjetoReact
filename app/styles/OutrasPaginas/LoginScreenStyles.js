@@ -3,10 +3,6 @@ import { StyleSheet, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFF',
-  },
 
   backgroundImage: {
     width: '100%',
@@ -16,18 +12,18 @@ const styles = StyleSheet.create({
 
   svgBackground: {
     position: 'absolute',
-    top: height * 0.22, 
+    top: height * 0.22,
   },
 
   content: {
     flex: 1,
     padding: width * 0.06,
-    top: height * 0.025,  
+    top: height * 0.025,
   },
 
   title: {
     fontFamily: 'Poppins-Bold',
-    fontSize: width * 0.08, 
+    fontSize: width * 0.08,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -41,7 +37,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: width * 0.035, 
+    fontSize: width * 0.035,
     marginTop: height * 0.012,
   },
 

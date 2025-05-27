@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
-import styles from '../../styles/OutrasPaginas/CategoriesPage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import styles from '@/app/styles/OutrasPaginas/CategoriesPage';
 
 const categories = [
     { key: '1', label: 'Comerciais', icon: 'local-shipping', iconLib: 'MaterialIcons', route: 'categories/comerciais' },

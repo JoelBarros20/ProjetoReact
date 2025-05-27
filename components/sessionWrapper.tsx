@@ -1,7 +1,9 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
+import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = {
   children: ReactNode;
@@ -10,6 +12,7 @@ type Props = {
 export default function SessionWrapper({ children }: Props) {
   const [isChecking, setIsChecking] = useState(true);
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     const check = async () => {
@@ -25,8 +28,19 @@ export default function SessionWrapper({ children }: Props) {
   if (isChecking) return null;
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {children}
-    </SafeAreaView>
+    <>
+      <View style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: insets.top ,
+        backgroundColor: '#000',
+        zIndex: 100,
+      }} pointerEvents="none" />
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }} edges={['top', 'left', 'right', 'bottom']}>
+        {children}
+      </SafeAreaView>
+    </>
   );
 }

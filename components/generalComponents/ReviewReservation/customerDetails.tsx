@@ -1,15 +1,14 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import styles from '@/app/styles/ComponentsStyles/ReviewReservation/CustomerDetails'
 import { useRouter } from 'expo-router';
 
+import styles from '@/app/styles/ComponentsStyles/ReviewReservation/CustomerDetails'
 
 export default function CustomerDetails() {
 
     const router = useRouter();
 
     return (
-
         <View>
             <Text style={styles.sectionTitle}>Detalhes do Condutor</Text>
 

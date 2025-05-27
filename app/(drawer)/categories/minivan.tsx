@@ -1,13 +1,15 @@
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import styles from '../../styles/Categories/Minivan';
 import { MaterialIcons } from '@expo/vector-icons';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { API_ROUTES, BASE_URL } from '@/env';
 import { Searchbar } from 'react-native-paper';
+
 import FilterModal from '@/components/generalComponents/Categories/filtroModal';
 import ListagemFotos from '@/components/generalComponents/Categories/listagemFotos';
 import SideMenu from '@/components/generalComponents/Menu/SideMenu';
+
+import styles from '@/app/styles/Categories/Minivan';
 
 
 type VehicleImage = {

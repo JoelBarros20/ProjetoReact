@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, ImageBackground, Dimensions, TouchableOpacity, Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './styles/OutrasPaginas/LoginScreenStyles';
-import BackgroundSVG from '../assets/svgs/login_layout.svg';
 import { ScrollView } from 'react-native';
 import { API_ROUTES } from '@/env';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import BackgroundSVG from '../assets/svgs/login_layout.svg';
+
+import SignInInputs from '@/components/generalComponents/SignIn/SignInInputs';
+import SideMenu from '@/components/generalComponents/Menu/SideMenu';
+
+import styles from '@/app/styles/OutrasPaginas/Signin';
 
 const { width, height } = Dimensions.get('window');
 
@@ -20,6 +25,7 @@ export default function Signin() {
     const [password_confirmation, setPassword_confirmation] = useState('');
     const [secureText, setSecureText] = useState(true);
     const [loading] = useState(false);
+    const insets = useSafeAreaInsets();
 
     // Faz a leitura das fontes da aplicação
     const [fontsLoaded] = useFonts({
@@ -81,62 +87,43 @@ export default function Signin() {
 
     // Conteúdo apresentado na página de Sign In
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }} edges={['left', 'right', 'bottom']}>
             <ScrollView
                 keyboardShouldPersistTaps="handled"
-                showsVerticalScrollIndicator={false}>
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: height * 0.05 + insets.bottom }}>
                 <ImageBackground source={require('../assets/images/login_image.jpg')} style={styles.backgroundImage}>
                     <BackgroundSVG width={width} height={height * 0.85} style={styles.svgBackground} />
+                    <View style={{ top: 45, left: 20, zIndex: 10 }}>
+                        <SideMenu />
+                    </View>
                 </ImageBackground>
 
-                <View style={styles.content}>
-                    <Text style={styles.title}>Dont' have an account?</Text>
-                    <Text style={styles.subtitle}>Create one</Text>
+                <SignInInputs
+                    name={name}
+                    setName={setName}
+                    email={email}
+                    setEmail={setEmail}
+                    password={password}
+                    setPassword={setPassword}
+                    password_confirmation={password_confirmation}
+                    setPassword_confirmation={setPassword_confirmation}
+                    secureText={secureText}
+                    setSecureText={setSecureText}
+                    handleLogin={handleLogin} />
 
-                    <Text style={styles.label}>Name</Text>
-                    <View style={styles.inputContainer}>
-                        <MaterialIcons name="person" size={20} color="#aaa" style={styles.icon} />
-                        <TextInput style={styles.input} placeholder="Name" value={name} onChangeText={setName} />
-                    </View>
+                <TouchableOpacity onPress={handleLogin} style={styles.loginButtonContainer}>
+                    <LinearGradient colors={["#444", "#222"]} style={styles.loginButton}>
+                        <Text style={styles.loginText}>Create account</Text>
+                    </LinearGradient>
+                </TouchableOpacity>
 
-                    <Text style={styles.label}>Email</Text>
-                    <View style={styles.inputContainer}>
-                        <MaterialIcons name="email" size={20} color="#aaa" style={styles.icon} />
-                        <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} />
-                    </View>
-
-                    <Text style={styles.label}>Password</Text>
-                    <View style={styles.inputContainer}>
-                        <MaterialIcons name="lock" size={20} color="#aaa" style={styles.icon} />
-                        <TextInput style={styles.input} placeholder="Password" secureTextEntry={secureText} value={password} onChangeText={setPassword} />
-                        <TouchableOpacity onPress={() => setSecureText(!secureText)}>
-                            <MaterialIcons name={secureText ? "visibility-off" : "visibility"} size={20} color="#aaa" />
-                        </TouchableOpacity>
-                    </View>
-
-                    <Text style={styles.label}>Password confirmation</Text>
-                    <View style={styles.inputContainer}>
-                        <MaterialIcons name="lock" size={20} color="#aaa" style={styles.icon} />
-                        <TextInput style={styles.input} placeholder="Password confirmation" secureTextEntry={secureText} value={password_confirmation}
-                            onChangeText={setPassword_confirmation} />
-
-                        <TouchableOpacity onPress={() => setSecureText(!secureText)}>
-                            <MaterialIcons name={secureText ? "visibility-off" : "visibility"} size={20} color="#aaa" />
-                        </TouchableOpacity>
-                    </View>
-
-                    <TouchableOpacity onPress={handleLogin} style={styles.loginButtonContainer}>
-                        <LinearGradient colors={["#444", "#222"]} style={styles.loginButton}>
-                            <Text style={styles.loginText}>Create account</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => router.push('/login')}>
-                        <Text style={styles.signupText}>Already have an account? <Text style={styles.signupLink}>Login</Text></Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={() => router.push('/login')}>
+                    <Text style={styles.signupText}>
+                        Already have an account? <Text style={styles.signupLink}>Login</Text>
+                    </Text>
+                </TouchableOpacity>
             </ScrollView>
-            <View style={{ height: 10, paddingBottom: 10 }}></View>
-        </View>
+        </SafeAreaView>
     );
 }

@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Dimensions } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import styles from '../../styles/Customer/HistoricoReservas';
 import { Searchbar, Menu, Button, Provider } from 'react-native-paper';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
+import styles from '@/app/styles/Customer/HistoricoReservas';
+
+
 export default function HistoricoReservasPage() {
+
   const { width, height } = Dimensions.get('window');
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);

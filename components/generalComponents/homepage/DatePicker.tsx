@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput } from 'react-native';
-import styles from '@/app/styles/ComponentsStyles/Homepage/DatePicker'
+
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
+import styles from '@/app/styles/ComponentsStyles/Homepage/DatePicker'
+
 export default function AnimatedPages() {
+    
     const [localizacao, setLocalizacao] = useState('');
     const [dataInicio, setDataInicio] = useState<string | null>(null);
     const [horaInicio, setHoraInicio] = useState<string | null>(null);

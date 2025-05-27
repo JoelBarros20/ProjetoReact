@@ -2,8 +2,9 @@ import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
-import styles from '../../styles/OutrasPaginas/ViaturasDetalhes'
 import { useRouter } from 'expo-router';
+
+import styles from '@/app/styles/OutrasPaginas/ViaturasDetalhes'
 
 export default function ViaturasDetalhesScreen() {
 
@@ -77,7 +78,7 @@ export default function ViaturasDetalhesScreen() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.ContainerButtonOffers}
-            onPress={() => router.push('/(drawer)/Stack/confirmpayments')}
+            onPress={() => router.push('/(drawer)/Stack/seguro')}
           >
             <Text style={styles.ButtonOfertas}>Reservar</Text>
           </TouchableOpacity>

@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, Platform, UIManager, Image, Animated, Easing, LayoutChangeEvent } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import styles from '../../../app/styles/ComponentsStyles/ReviewReservation/reviewCarDetails';
+
+import styles from '@/app/styles/ComponentsStyles/ReviewReservation/reviewCarDetails';
+
 
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);

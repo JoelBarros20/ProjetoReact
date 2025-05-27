@@ -1,13 +1,14 @@
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as SecureStore from "expo-secure-store";
 import { ThemeProvider } from "@react-navigation/native";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { DarkTheme, DefaultTheme } from "@react-navigation/native";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, AppState, View } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
+import * as SplashScreen from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,7 +34,6 @@ export default function RootLayout() {
       }
 
       const token = await AsyncStorage.getItem("token");
-      const lastRoute = await AsyncStorage.getItem("lastRoute");
 
       console.log("Token:", token);
       //console.log("lastRoute:", lastRoute);
@@ -50,6 +50,16 @@ export default function RootLayout() {
     prepare();
   }, [loaded]);
 
+  // Limpa o flag quando a app vai para background
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", async (nextAppState) => {
+      if (nextAppState === "background") {
+        await SecureStore.deleteItemAsync("session_started");
+      }
+    });
+    return () => subscription.remove();
+  }, []);
+
   if (!loaded || initialRoute === null) {
     return (
       <View style={{ flex: 1, backgroundColor: "#fff", justifyContent: "center", alignItems: "center" }}>
@@ -65,6 +75,7 @@ export default function RootLayout() {
         screenOptions={{
           headerShown: false,
           animation: "none",
+          gestureEnabled: false,
         }}
       >
         <Stack.Screen name="(drawer)" />

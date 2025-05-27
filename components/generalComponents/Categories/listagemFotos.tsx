@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Dimensions, Image } from 'react-native';
+
 import styles from '@/app/styles/ComponentsStyles/Categories/listagemFotos';
 
 const { height } = Dimensions.get('window');

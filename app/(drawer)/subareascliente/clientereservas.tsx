@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Dimensions } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import styles from '../../styles/Customer/ReservasCliente';
 import { Searchbar, Menu, Button, Provider } from 'react-native-paper';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
+import styles from '@/app/styles/Customer/ReservasCliente';
+
 export default function ClienteReservasPage() {
+  
   const { width, height } = Dimensions.get('window');
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
@@ -102,7 +105,7 @@ export default function ClienteReservasPage() {
                 value={searchQuery}
                 inputStyle={{ fontSize: 14, paddingBottom: height * 0.021, textAlignVertical: 'center' }}
                 placeholderTextColor="#666" // 🔹 torna o placeholder visível
-                iconColor="#666"    
+                iconColor="#666"
                 onChangeText={(query) => setSearchQuery(query)}
                 style={styles.searchBar}
               />

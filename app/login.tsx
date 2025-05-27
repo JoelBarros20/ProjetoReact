@@ -3,13 +3,17 @@ import { View, Text, TextInput, TouchableOpacity, ImageBackground, Dimensions } 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Checkbox } from 'react-native-paper';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './styles/OutrasPaginas/LoginScreenStyles';
-import BackgroundSVG from '../assets/svgs/login_layout.svg';
 import { API_ROUTES } from '@/env';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import SideMenu from '@/components/generalComponents/Menu/SideMenu';
+import BackgroundSVG from '../assets/svgs/login_layout.svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SplashScreen from 'expo-splash-screen';
+
+import styles from '@/app/styles/OutrasPaginas/LoginScreenStyles';
 
 const { width, height } = Dimensions.get('window');
 
@@ -86,11 +90,13 @@ export default function LoginScreen() {
 
   // Conteúdo apresentado na página de Login
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/images/login_image.jpg')}
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }} edges={['left', 'right', 'bottom']}>
+      <ImageBackground source={require('../assets/images/login_image.jpg')}
         style={styles.backgroundImage}>
         <BackgroundSVG width={width} height={height * 0.85} style={styles.svgBackground} />
+        <View style={{ top: 45, left: 20, zIndex: 10 }}>
+          <SideMenu />
+        </View>
       </ImageBackground>
 
       <View style={styles.content}>
@@ -131,6 +137,6 @@ export default function LoginScreen() {
           <Text style={styles.signupText}>Don't have an account? <Text style={styles.signupLink}>Sign Up</Text></Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

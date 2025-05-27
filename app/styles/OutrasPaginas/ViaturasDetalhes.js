@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
         width: width * 0.08,
         alignItems: 'flex-start',
     },
+
     buttonContainer: {
         flex: 1,
         justifyContent: 'flex-end',
@@ -94,19 +95,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: width * 0.04,
         marginTop: height * 0.03
     },
+
     ContainerButtonOffers: {
-        backgroundColor: '#b30000',
-        paddingVertical: height * 0.012,
-        borderRadius: width * 0.02,
-        width: '100%',
-        height: height * 0.07,
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: "#b30000",
+        borderRadius: width * 0.025,
+        paddingVertical: height * 0.017,
+        alignItems: "center",
+        marginTop: height * 0.005,
+        width: width * 0.9,
     },
+
     ButtonOfertas: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 22
+        color: "#fff",
+        fontWeight: "bold",
+        fontSize: width * 0.045,
     },
 });
 

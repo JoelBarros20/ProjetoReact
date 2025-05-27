@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
-import styles from '../../styles/Payments/ReviewReservation'
-import VehicleCard from '../../../components/generalComponents/ReviewReservation/reviewCarDetails';
-import CustomerDetails from '../../../components/generalComponents/ReviewReservation/customerDetails';
-import SideMenu from '@/components/generalComponents/Menu/SideMenu';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import VehicleCard from '@/components/generalComponents/ReviewReservation/reviewCarDetails';
+import CustomerDetails from '@/components/generalComponents/ReviewReservation/customerDetails';
+import SideMenu from '@/components/generalComponents/Menu/SideMenu';
+
+import styles from '@/app/styles/Payments/ReviewReservation'
 
 const { width } = Dimensions.get('window');
 

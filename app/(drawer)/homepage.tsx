@@ -3,15 +3,18 @@ import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { View, TouchableOpacity, ImageBackground, Text, ScrollView, Image, Dimensions, Animated } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import useAuthGuard from '@/hooks/useAuthGuard';
-import styles from '../styles/OutrasPaginas/Homepage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { API_ROUTES, BASE_URL } from '@/env';
 import { FlatList } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 import { ActivityIndicator } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import useAuthGuard from '@/hooks/useAuthGuard';
 import DatePickers from '@/components/generalComponents/homepage/DatePicker'
+import * as SplashScreen from 'expo-splash-screen';
+
+import styles from '@/app/styles/OutrasPaginas/Homepage';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,6 +44,7 @@ export default function HomePageScreen() {
   const [pickerType, setPickerType] = useState<'inicio' | 'fim' | 'horaInicio' | 'horaFim' | null>(null);
   const [images, setImages] = useState<VehicleImage[]>([]);
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const insets = useSafeAreaInsets();
 
   const formatTime = (date: Date) => {
     const hours = date.getHours().toString().padStart(2, '0');
@@ -103,19 +107,25 @@ export default function HomePageScreen() {
   }
 
   return (
+    <View style={{ flex: 1, backgroundColor: "#FFF" }}>
 
-    <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: height * 0.02 }}
+      <ScrollView showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingBottom: insets.bottom,
+          flexGrow: 1,
+          minHeight: height,
+          backgroundColor: "#FFF",
+        }}
+        style={{ backgroundColor: "#FFF", flex: 1 }}
         bounces={false}
         overScrollMode="never">
+
         <ImageBackground source={require('@/assets/images/login_image.jpg')} style={styles.backgroundImage} blurRadius={8}>
           <LinearGradient colors={['#00000000', '#00000079']} style={styles.LinearGradient}>
             <Text style={styles.TextTitle}>Aluguer de carros</Text>
             <Text style={styles.TextSubtitle}>Ótimos carros a ótimos preços</Text>
             <View style={styles.ContainerInputs}>
-
               <DatePickers />
-
             </View>
           </LinearGradient>
         </ImageBackground>
@@ -134,7 +144,7 @@ export default function HomePageScreen() {
 
         <View style={{ paddingHorizontal: 16 }}>
           <FlatList data={images} keyExtractor={(item) => item.id.toString()} horizontal showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingRight: 16 }}
+            contentContainerStyle={{ paddingRight: 16, paddingBottom: 16 }}
             renderItem={({ item }) => {
               const imageUrl = `${BASE_URL}${item.image_url}`;
               return (
@@ -162,8 +172,6 @@ export default function HomePageScreen() {
             <MaterialIcons name="menu" size={30} color="#000" />
           </TouchableOpacity>
         </View>
-
-
       </ScrollView>
     </View >
   );
