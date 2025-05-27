@@ -8,7 +8,7 @@ import { API_ROUTES } from '@/env';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import BackgroundSVG from '../assets/svgs/login_layout.svg';
+import BackgroundSVG from '@/assets/svgs/login_layout.svg';
 
 import SignInInputs from '@/components/generalComponents/SignIn/SignInInputs';
 import SideMenu from '@/components/generalComponents/Menu/SideMenu';
@@ -29,8 +29,8 @@ export default function Signin() {
 
     // Faz a leitura das fontes da aplicação
     const [fontsLoaded] = useFonts({
-        'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
-        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+        'Poppins-Regular': require('@/assets/fonts/Poppins-Regular.ttf'),
+        'Poppins-Bold': require('@/assets/fonts/Poppins-Bold.ttf'),
     });
 
     if (!fontsLoaded || loading) {
@@ -92,7 +92,7 @@ export default function Signin() {
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: height * 0.05 + insets.bottom }}>
-                <ImageBackground source={require('../assets/images/login_image.jpg')} style={styles.backgroundImage}>
+                <ImageBackground source={require('@/assets/images/login_image.jpg')} style={styles.backgroundImage}>
                     <BackgroundSVG width={width} height={height * 0.85} style={styles.svgBackground} />
                     <View style={{ top: 45, left: 20, zIndex: 10 }}>
                         <SideMenu />

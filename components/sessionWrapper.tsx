@@ -1,9 +1,10 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Props = {
   children: ReactNode;

@@ -9,7 +9,7 @@ import { API_ROUTES } from '@/env';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import SideMenu from '@/components/generalComponents/Menu/SideMenu';
-import BackgroundSVG from '../assets/svgs/login_layout.svg';
+import BackgroundSVG from '@/assets/svgs/login_layout.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -80,8 +80,8 @@ export default function LoginScreen() {
 
   // Faz a leitura das fontes da aplicação
   const [fontsLoaded] = useFonts({
-    'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    'Poppins-Regular': require('@/assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-Bold': require('@/assets/fonts/Poppins-Bold.ttf'),
   });
 
   if (!fontsLoaded || loading) {
@@ -91,7 +91,7 @@ export default function LoginScreen() {
   // Conteúdo apresentado na página de Login
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }} edges={['left', 'right', 'bottom']}>
-      <ImageBackground source={require('../assets/images/login_image.jpg')}
+      <ImageBackground source={require('@/assets/images/login_image.jpg')}
         style={styles.backgroundImage}>
         <BackgroundSVG width={width} height={height * 0.85} style={styles.svgBackground} />
         <View style={{ top: 45, left: 20, zIndex: 10 }}>

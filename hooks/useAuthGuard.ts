@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function useAuthGuard() {
@@ -13,7 +14,7 @@ export default function useAuthGuard() {
         await new Promise((resolve) => setTimeout(resolve, 300));
 
         const token = await AsyncStorage.getItem('token');
-       // console.log("Token no useAuthGuard:", token);
+        // console.log("Token no useAuthGuard:", token);
 
         if (!token) {
           router.replace('/login');

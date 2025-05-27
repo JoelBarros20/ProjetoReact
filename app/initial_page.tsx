@@ -13,14 +13,14 @@ import styles from '@/app/styles/OutrasPaginas/InitialScreen';
 
 export default function WelcomeScreen() {
 
-  const [assets] = useAssets([require("../assets/images/login_image.jpg")]);
+  const [assets] = useAssets([require("@/assets/images/login_image.jpg")]);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
   const [fontsLoaded] = useFonts({
-    'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-    'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
+    'Poppins-Regular': require('@/assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-Bold': require('@/assets/fonts/Poppins-Bold.ttf'),
+    'Poppins-Medium': require('@/assets/fonts/Poppins-Medium.ttf'),
   });
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function WelcomeScreen() {
     return null;
   }
 
-  console.log("Pagina de Log")
+  //console.log("Pagina de Log")
 
   return (
     <ImageBackground source={{ uri: assets[0]?.localUri ?? "" }}
