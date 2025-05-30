@@ -172,6 +172,7 @@ export default function EconomicoPage() {
       <ListagemFotos
         images={images}
         BASE_URL={BASE_URL}
+        from = "categories/economico"
       />
 
     </View >

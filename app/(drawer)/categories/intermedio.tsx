@@ -170,6 +170,7 @@ export default function IntermedioPage() {
       <ListagemFotos
         images={images}
         BASE_URL={BASE_URL}
+        from="categories/intermedio"
       />
     </View >
   );

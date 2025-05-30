@@ -171,6 +171,7 @@ export default function PremiumPage() {
       <ListagemFotos
         images={images}
         BASE_URL={BASE_URL}
+        from="categories/premium"
       />
 
     </View >

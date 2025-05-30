@@ -172,6 +172,7 @@ export default function MinivanPage() {
       <ListagemFotos
         images={images}
         BASE_URL={BASE_URL}
+        from="categories/minivan"
       />
     </View >
   );

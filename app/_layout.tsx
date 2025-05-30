@@ -74,7 +74,7 @@ export default function RootLayout() {
         initialRouteName={initialRoute}
         screenOptions={{
           headerShown: false,
-          animation: "none",
+          animation: "slide_from_right",
           gestureEnabled: false,
         }}
       >
@@ -82,6 +82,10 @@ export default function RootLayout() {
         <Stack.Screen name="login" />
         <Stack.Screen name="signin" />
         <Stack.Screen name="initial_page" />
+        <Stack.Screen name="categories" />
+        <Stack.Screen name="Stack" />
+        <Stack.Screen name="subareascliente" />
+        <Stack.Screen name="viaturasdetalhes" />
       </Stack>
     </ThemeProvider>
   );

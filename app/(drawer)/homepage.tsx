@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { View, TouchableOpacity, ImageBackground, Text, ScrollView, Image, Dimensions, Animated } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
@@ -12,6 +11,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useAuthGuard from '@/hooks/useAuthGuard';
 import DatePickers from '@/components/generalComponents/homepage/DatePicker'
+import CustomDrawer from '@/components/CustomMenu/CustomMenu';
+
 import * as SplashScreen from 'expo-splash-screen';
 
 import styles from '@/app/styles/OutrasPaginas/Homepage';
@@ -26,7 +27,6 @@ type VehicleImage = {
 const { width, height } = Dimensions.get('window');
 
 export default function HomePageScreen() {
-
   const router = useRouter();
 
   const [fontsLoaded] = useFonts({
@@ -35,7 +35,6 @@ export default function HomePageScreen() {
   });
 
   const [loading] = useState(false);
-  const navigation = useNavigation();
   const checkingToken = useAuthGuard();
   const [dataInicio, setDataInicio] = useState<string | null>(null);
   const [dataFim, setDataFim] = useState<string | null>(null);
@@ -45,6 +44,9 @@ export default function HomePageScreen() {
   const [images, setImages] = useState<VehicleImage[]>([]);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
+
+  // Estado para abrir/fechar o menu lateral personalizado
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const formatTime = (date: Date) => {
     const hours = date.getHours().toString().padStart(2, '0');
@@ -108,6 +110,15 @@ export default function HomePageScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#FFF" }}>
+      {/* Botão para abrir o menu lateral personalizado */}
+      <View style={{ position: 'absolute', top: insets.top + 10, left: 10, zIndex: 101 }}>
+        <TouchableOpacity onPress={() => setDrawerOpen(true)}>
+          <MaterialIcons name="menu" size={30} color="#000" />
+        </TouchableOpacity>
+      </View>
+
+      {/* Drawer personalizado */}
+      {drawerOpen && <CustomDrawer onClose={() => setDrawerOpen(false)} />}
 
       <ScrollView showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -136,7 +147,7 @@ export default function HomePageScreen() {
           </View>
           <View>
             <TouchableOpacity style={styles.ContainerButtonOffers}
-              onPress={() => { router.push('/(drawer)/categories/categoriespage') }} >
+              onPress={() => { router.push('/categories/categoriespage') }} >
               <Text style={styles.ButtonOfertas}>Ver</Text>
             </TouchableOpacity>
           </View>
@@ -156,8 +167,18 @@ export default function HomePageScreen() {
                   </View>
                   <View style={styles.ContainerInsideCard}>
                     <Text style={{ fontSize: 18, fontWeight: 'bold' }}>€150.00</Text>
-                    <TouchableOpacity style={styles.ContainerInsideButton}
-                      onPress={() => router.push('/(drawer)/Stack/viaturasdetalhes')}>
+                    <TouchableOpacity
+                      style={styles.ContainerInsideButton}
+                      onPress={() => router.push({
+                        pathname: '/Stack/viaturasdetalhes',
+                        params: {
+                          imageUrl: imageUrl,
+                          nome: 'Peugeot 208', // ou item.nome se tiver
+                          descricao: 'ou Similar | Económico', // ou item.descricao se tiver
+                          preco: '150.00', // ou item.preco se tiver
+                        }
+                      })}
+                    >
                       <Text style={{ color: '#fff', fontWeight: 'bold' }}>Ver</Text>
                     </TouchableOpacity>
                   </View>
@@ -166,13 +187,7 @@ export default function HomePageScreen() {
             }}
           />
         </View>
-
-        <View style={styles.Menu}>
-          <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-            <MaterialIcons name="menu" size={30} color="#000" />
-          </TouchableOpacity>
-        </View>
       </ScrollView>
-    </View >
+    </View>
   );
 }

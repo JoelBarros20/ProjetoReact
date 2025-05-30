@@ -7,9 +7,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFF'
     },
+
     spacer: {
         width: width * 0.08,
     },
+
     backgroundImage: {
         width: '100%',
         height: height * 0.09,
@@ -18,16 +20,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: width * 0.04,
         justifyContent: 'space-between',
     },
+
     imageContainer: {
         height: height * 0.3,
-        backgroundColor: '#333',
+        backgroundColor: '#000',
         justifyContent: 'center',
         alignItems: 'center'
     },
+
     carImage: {
         width: width * 0.9,
         height: height * 0.22,
     },
+
     infoSection: {
         padding: width * 0.05,
         backgroundColor: '#F5F4F9'
@@ -39,36 +44,44 @@ const styles = StyleSheet.create({
         color: '#111',
         marginBottom: height * 0.007
     },
+
     subtitle: {
         fontSize: 14,
         color: '#aaa',
         marginBottom: height * 0.02
     },
+
     specsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        gap: width * 0.04
+        // gap: width * 0.04
     },
+
     specItem: {
         flexDirection: 'row',
         alignItems: 'center',
         width: '48%',
-        marginVertical: height * 0.006
+        marginVertical: height * 0.006,
+        marginRight: width * 0.04
     },
+
     specText: {
         color: '#111',
         marginLeft: width * 0.015
     },
+
     sectionBox: {
         padding: width * 0.05,
         backgroundColor: '#FFF'
     },
+
     sectionTitle: {
         color: '#111',
         fontSize: 22,
         fontWeight: 'bold',
         marginLeft: width * 0.01
     },
+
     optionTitle: {
         color: '#111',
         fontSize: 16,
@@ -81,19 +94,26 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    Menu: {
-        width: width * 0.08,
-        alignItems: 'flex-start',
+    ContainerMenu: {
+        position: 'absolute',
+        top: 30,
+        left: 16,
+        zIndex: 10,
+        backgroundColor: '#FFF',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: width * 0.11,
+        height: width * 0.11,
+        borderRadius: width * 0.065,
     },
 
     buttonContainer: {
-        flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
         paddingBottom: height * 0.01,
         marginBottom: height * 0.01,
         paddingHorizontal: width * 0.04,
-        marginTop: height * 0.03
+        marginTop: height * 0.03,
     },
 
     ContainerButtonOffers: {

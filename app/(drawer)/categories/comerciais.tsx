@@ -22,7 +22,6 @@ type TransmissionOption = {
   icon: keyof typeof MaterialIcons.glyphMap;
 };
 
-
 export default function ComerciaisPage() {
 
   // Variável com valor fixo
@@ -157,6 +156,7 @@ export default function ComerciaisPage() {
       <ListagemFotos
         images={images}
         BASE_URL={BASE_URL}
+        from="categories/comerciais"
       />
     </View >
   );

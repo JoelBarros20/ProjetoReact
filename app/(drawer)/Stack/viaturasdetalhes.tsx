@@ -1,42 +1,46 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+
+import SideMenu from '@/components/generalComponents/Menu/SideMenu';
 
 import styles from '@/app/styles/OutrasPaginas/ViaturasDetalhes'
 
 export default function ViaturasDetalhesScreen() {
 
+  const params = useLocalSearchParams();
+  const imageUrl = params.imageUrl as string
+  const nome = params.nome as string || 'Nome da Viatura';
+  const descricao = params.descricao as string || 'Uma descrição da viatura';
+  const preco = params.preco as string || '190.00';
+  const from = params.from as string
+
   const router = useRouter();
-  const navigation = useNavigation();
 
   return (
+
     <ScrollView style={styles.container}
       bounces={false}
-      showsVerticalScrollIndicator={false}>
-      <View style={styles.backgroundImage}>
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 200 }}>
 
-        {/* Menu lateral */}
-        <View style={styles.Menu}>
-          <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-            <MaterialIcons name="menu" size={30} color="#fff" />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.spacer} />
+      {/* Menu lateral */}
+      <View style={styles.ContainerMenu}>
+        <SideMenu iconColor='#000' from={from} />
       </View>
 
       {/* Imagem */}
-      <Image source={{ uri: 'https://cdn.group.renault.com/ren/master/renault-new-cars/renault-twingo-e-tech-electric/bdc-renault-twingo-e-tech-electric.png' }}
-        style={styles.carImage}
-        resizeMode="contain"
+      <Image source={{ uri: imageUrl }}
+        style={{ width: '100%', height: '40%' }}
+        resizeMode="cover"
       />
 
       {/* Detalhes da Viatura */}
       <View style={styles.infoSection}>
-        <Text style={styles.title}>Nome da Viatura</Text>
+        <Text style={styles.title}>{nome}</Text>
         <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.subtitle}>Uma descrição da viatura</Text>
+          <Text style={styles.subtitle}>{descricao}</Text>
           <Text style={styles.subtitle}> | </Text>
           <Text style={styles.subtitle}> Categoria da viatura</Text>
         </View>
@@ -61,7 +65,23 @@ export default function ViaturasDetalhesScreen() {
             <Text style={styles.specText}>Dados Viatura</Text>
           </View>
           <View style={styles.specItem}>
-            <MaterialIcons name="badge" size={18} color={'#FFF'} />
+            <MaterialIcons name="badge" size={18} color={'#111'} />
+            <Text style={styles.specText}>Dados Viatura</Text>
+          </View>
+          <View style={styles.specItem}>
+            <Ionicons name="person" size={18} color={'#111'} />
+            <Text style={styles.specText}>Dados Viatura</Text>
+          </View>
+          <View style={styles.specItem}>
+            <Ionicons name="person" size={18} color={'#111'} />
+            <Text style={styles.specText}>Dados Viatura</Text>
+          </View>
+          <View style={styles.specItem}>
+            <Ionicons name="person" size={18} color={'#111'} />
+            <Text style={styles.specText}>Dados Viatura</Text>
+          </View>
+          <View style={styles.specItem}>
+            <Ionicons name="person" size={18} color={'#111'} />
             <Text style={styles.specText}>Dados Viatura</Text>
           </View>
         </View>
@@ -73,7 +93,7 @@ export default function ViaturasDetalhesScreen() {
           <View>
             <FontAwesome name="euro" size={22} color="#111" />
           </View>
-          <Text style={styles.sectionTitle}>190.00</Text>
+          <Text style={styles.sectionTitle}>{preco}</Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -83,8 +103,8 @@ export default function ViaturasDetalhesScreen() {
             <Text style={styles.ButtonOfertas}>Reservar</Text>
           </TouchableOpacity>
         </View>
-
       </View>
+
     </ScrollView >
   );
 }

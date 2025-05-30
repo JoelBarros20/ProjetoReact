@@ -170,6 +170,7 @@ export default function SUVPage() {
       <ListagemFotos
         images={images}
         BASE_URL={BASE_URL}
+        from='categories/suv'
       />
 
     </View >

@@ -161,6 +161,7 @@ export default function DesportivosPage() {
       <ListagemFotos
         images={images}
         BASE_URL={BASE_URL}
+        from="categories/desportivos"
       />
 
     </View >
