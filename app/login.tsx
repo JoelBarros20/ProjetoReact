@@ -43,8 +43,8 @@ export default function LoginScreen() {
           "Accept": "application/json"
         },
         body: JSON.stringify({
-          Email: username,
-          Password: password
+          email: username,
+          password: password
         })
       });
 

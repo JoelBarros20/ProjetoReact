@@ -10,6 +10,7 @@ export const BASE_URL = `http://${LOCAL_IP}:${PORT}`;
 // Rotas necessárias para o projeto
 export const API_ROUTES = {
   IMAGES: `${BASE_URL}/api/images`,
-  LOGIN: `${BASE_URL}/api/CustomerLogin`,
+  LOGIN: `${BASE_URL}/api/customerLogin`,
   SIGNIN: `${BASE_URL}/api/register`,
+  VEHICLES: `${BASE_URL}/api/vehicles`,	
 };
