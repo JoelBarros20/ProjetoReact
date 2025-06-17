@@ -2,19 +2,24 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, Animated, Easing } from 'react-native';
 import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import { BlurView } from 'expo-blur';
 import { useRouter, usePathname } from 'expo-router';
 import { useDrawerStatus } from '@react-navigation/drawer';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 import styles from '@/app/styles/OutrasPaginas/Drawer';
+import { API_ROUTES } from '@/env';
 
 
 export default function CustomDrawerContent(props: any) {
 
     const [showCategories, setShowCategories] = useState(false);
     const [showSubAreas, setShowSubAreas] = useState(false);
+    const [userName, setUserName] = useState('Utilizador');
     const animation = useRef(new Animated.Value(0)).current;
     const animationSubAreas = useRef(new Animated.Value(0)).current;
     const status = useDrawerStatus();
@@ -83,17 +88,37 @@ export default function CustomDrawerContent(props: any) {
         }
     }, [status]);
 
+    useEffect(() => {
+        const fetchUserName = async () => {
+            try {
+                const userId = await AsyncStorage.getItem('userId');
+                if (!userId) return;
+                fetch(API_ROUTES.CUSTOMER_NAME.replace('{id}', userId))
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.name) setUserName(data.name);
+                    })
+                    .catch(() => { });
+            } catch (e) {
+                // erro ao buscar userId
+            }
+        };
+        fetchUserName();
+    }, []);
+
     return (
         <BlurView intensity={80} tint="dark" style={{ flex: 1 }}>
             <View style={styles.DrawerContent}>
                 <View style={styles.ContainerImage}>
-                    <Image source={{ uri: 'https://randomuser.me/api/portraits/women/1.jpg' }} style={styles.Image} />
-                    <Text style={styles.TextImage}>Utilizador</Text>
+                    <View style={{ marginBottom: 10 }}>
+                        <FontAwesomeIcon icon={faCircleUser} size={40} />
+                    </View>
+                    <Text style={styles.TextImage}>{userName}</Text>
                 </View>
 
                 <TouchableOpacity onPress={handleLogout} style={styles.containerButtonIcon}>
                     <Ionicons name="log-out-outline" size={22} color="#fff" style={styles.ButtonLogout} />
-                    <Text style={styles.ButtonText}>Log out</Text>
+                    <Text style={styles.ButtonText}>Log Out</Text>
                 </TouchableOpacity>
             </View>
 

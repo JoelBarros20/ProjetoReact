@@ -60,7 +60,10 @@ export default function LoginScreen() {
         if (token) {
           await AsyncStorage.setItem('token', token);
           await AsyncStorage.setItem('lastRoute', 'homepage');
+          await AsyncStorage.setItem('userId', String(data["Customer Logado"].id));
           const savedToken = await AsyncStorage.getItem('token');
+          const userId = await AsyncStorage.getItem('userId');
+          console.log("Id do Utilizador:", userId);
           console.log("Token guardado localmente:", savedToken);
           router.replace("/(drawer)/homepage"); // Caso o token seja verificado avança para a Homepage
         } else {

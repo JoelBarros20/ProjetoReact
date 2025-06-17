@@ -161,15 +161,16 @@ export default function HomePageScreen() {
               return (
                 <View style={styles.ContainerCards}>
                   <Image source={{ uri: item.photo_url }} style={styles.Image} resizeMode="cover" />
-                  <View style={{ paddingHorizontal: 10, paddingTop: 8, flexDirection: 'row' }}>
-                    <Text style={{ fontSize: 24,  color: '#333' }}>{item.brand_name}</Text>
-                    <Text style={{ fontSize: 24,  color: '#333' }}>{item.model_name}</Text>
+                  <View style={{ paddingHorizontal: 10, paddingTop: 8, flexDirection: 'row', }}>
+                    <Text style={{ fontSize: 20, color: '#333', fontWeight: 600 }}>{item.brand_name}</Text>
+                    <View style={{ width: 4 }} />
+                    <Text style={{ fontSize: 20, color: '#333', fontWeight: 600 }}>{item.model_name}</Text>
                   </View>
-                  <View style={{ paddingHorizontal: 10, paddingTop: 8, flexDirection: 'row' }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#333' }}>{item.category_name}</Text>
+                  <View style={{ paddingHorizontal: 10, paddingTop: 2, flexDirection: 'row' }}>
+                    <Text style={{ fontSize: 16, color: '#333' }}>{item.category_name}</Text>
                   </View>
                   <View style={styles.ContainerInsideCard}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>€{item.base_price_day}</Text>
+                    <Text style={{ fontSize: 24, fontWeight: 'bold' }}>€{item.base_price_day}</Text>
                     <TouchableOpacity
                       style={styles.ContainerInsideButton}
                       onPress={() => router.push({

@@ -13,4 +13,6 @@ export const API_ROUTES = {
   LOGIN: `${BASE_URL}/api/customerLogin`,
   SIGNIN: `${BASE_URL}/api/register`,
   VEHICLES: `${BASE_URL}/api/vehicles`,	
+  CUSTOMER_NAME: `${BASE_URL}/api/customer/{id}`,
+  CATEGORIES: `${BASE_URL}/api/categories`,
 };
