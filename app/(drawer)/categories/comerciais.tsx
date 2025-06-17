@@ -13,7 +13,12 @@ import styles from '@/app/styles/Categories/Comerciais';
 
 type VehicleImage = {
   id: number;
-  image_url: string;
+  photo_url: string;
+  base_price_day: number;
+  brand_name: string;
+  model_name: string;
+  transmission: string;
+  category_name: string;
 };
 
 type TransmissionOption = {
@@ -37,6 +42,11 @@ export default function ComerciaisPage() {
 
   // Função para limpar os filtros do modal
   const clearFilters = () => { setSortOption("sort"), setfeaturesOptions("featured"), setNumberOfSeats("numberSeats") };
+
+  const transmissionKeyToId = {
+    manual: 1,
+    automatica: 2,
+  };
 
   // Listas para popular os flatlists dos filtros com opções
   const sortOptions = [
@@ -66,8 +76,17 @@ export default function ComerciaisPage() {
     { key: 'manual', label: 'Manual', icon: 'build' },
   ];
 
-  const [selectedTransmission, setSelectedTransmission] = useState<string>('automatica');
+  const [selectedTransmission, setSelectedTransmission] = useState<'manual' | 'automatica' | ''>('');
 
+  const filters = images.filter(
+    (img) =>
+      (!selectedTransmission || img.transmission === selectedTransmission) &&
+      img.category_name?.toLowerCase() === 'comercial' &&
+      img.photo_url && typeof img.photo_url === 'string' && img.photo_url.trim() !== '' &&
+      (searchQuery === '' ||
+        img.brand_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        img.model_name?.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
   // Função para atribuir icons às opções dos filtros
   const getFilterIcon = (cat: string, isActive: boolean) => {
     const iconColor = isActive ? '#000' : '#fff';
@@ -86,16 +105,20 @@ export default function ComerciaisPage() {
 
   // Código responsável por fazer a requisição à API (Imagens)
   useEffect(() => {
-    fetch(API_ROUTES.IMAGES)
+    fetch(API_ROUTES.VEHICLES)
       .then(res => res.json())
       .then((data) => {
-        setImages(data);
+        const filtered = data.filter(
+          (v: any) =>
+            v.category_name?.toLowerCase() === 'comercial' &&
+            v.photo_url && typeof v.photo_url === 'string' && v.photo_url.trim() !== ''
+        );
+        setImages(filtered);
       })
       .catch(() => { });
   }, []);
 
   return (
-
     <View style={styles.ContainerMainPage}>
       <View style={styles.HeaderPage}>
         <SideMenu />
@@ -116,7 +139,7 @@ export default function ComerciaisPage() {
         {/* Filtros superiores */}
         <FiltrosSuperiores
           options={transmissionOptions}
-          onSelect={(key) => setSelectedTransmission(key)}
+          onSelect={(key) => setSelectedTransmission(key as 'manual' | 'automatica' | '')}
           selectedKey={selectedTransmission}
         />
 
@@ -154,7 +177,7 @@ export default function ComerciaisPage() {
 
       {/* Componente Lista dos Veiculos */}
       <ListagemFotos
-        images={images}
+        photo_url={filters}
         BASE_URL={BASE_URL}
         from="categories/comerciais"
       />

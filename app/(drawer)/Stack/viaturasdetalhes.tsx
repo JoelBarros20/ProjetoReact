@@ -10,8 +10,8 @@ import styles from '@/app/styles/OutrasPaginas/ViaturasDetalhes'
 export default function ViaturasDetalhesScreen() {
 
   const params = useLocalSearchParams();
-  const imageUrl = params.imageUrl as string
-  const nome = params.nome as string || 'Nome da Viatura';
+  const imageBase64 = params.imageBase64 as string
+  const brand_name = params.brand_name as string || 'Nome da Viatura';
   const descricao = params.descricao as string || 'Uma descrição da viatura';
   const preco = params.preco as string || '190.00';
   const from = params.from as string
@@ -31,14 +31,14 @@ export default function ViaturasDetalhesScreen() {
       </View>
 
       {/* Imagem */}
-      <Image source={{ uri: imageUrl }}
+      <Image source={{ uri: imageBase64 }}
         style={{ width: '100%', height: '40%' }}
         resizeMode="cover"
       />
 
       {/* Detalhes da Viatura */}
       <View style={styles.infoSection}>
-        <Text style={styles.title}>{nome}</Text>
+        <Text style={styles.title}>{brand_name}</Text>
         <View style={{ flexDirection: 'row' }}>
           <Text style={styles.subtitle}>{descricao}</Text>
           <Text style={styles.subtitle}> | </Text>
@@ -98,7 +98,7 @@ export default function ViaturasDetalhesScreen() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.ContainerButtonOffers}
-            onPress={() => router.push('/(drawer)/Stack/seguro')}
+            onPress={() => router.push('/stack/seguro')}
           >
             <Text style={styles.ButtonOfertas}>Reservar</Text>
           </TouchableOpacity>

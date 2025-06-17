@@ -1,7 +1,7 @@
 // Ficheiro env para colocar variáveis sensiveis 
 
 // IP e Porta 
-const LOCAL_IP = "192.168.1.86";
+const LOCAL_IP = "192.168.1.83";
 const PORT = "8000";
 
 // Construção do URL com o IP e a Porta

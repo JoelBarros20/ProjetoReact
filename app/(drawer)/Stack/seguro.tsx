@@ -73,7 +73,7 @@ export default function SeguroPage() {
                     <Text style={styles.totalValue}>91,99 €</Text>
                 </View>
                 <TouchableOpacity style={styles.continueButton}
-                    onPress={() => router.push('/(drawer)/Stack/confirmpayments')} >
+                    onPress={() => router.push('/stack/confirmpayments')} >
                     <Text style={styles.continueText}>Continuar</Text>
                 </TouchableOpacity>
             </View>

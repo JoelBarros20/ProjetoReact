@@ -174,7 +174,7 @@ export default function HomePageScreen() {
                     <TouchableOpacity
                       style={styles.ContainerInsideButton}
                       onPress={() => router.push({
-                        pathname: '/(drawer)/Stack/viaturasdetalhes',
+                        pathname: '/stack/viaturasdetalhes',
                         params: {
                           imageBase64: item.photo_url,
                           brand_name: item.brand_name,
