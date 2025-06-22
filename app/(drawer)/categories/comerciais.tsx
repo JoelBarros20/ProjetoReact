@@ -17,7 +17,7 @@ type VehicleImage = {
   base_price_day: number;
   brand_name: string;
   model_name: string;
-  transmission: string;
+  transmission: number;
   category_name: string;
 };
 
@@ -78,15 +78,33 @@ export default function ComerciaisPage() {
 
   const [selectedTransmission, setSelectedTransmission] = useState<'manual' | 'automatica' | ''>('');
 
-  const filters = images.filter(
-    (img) =>
-      (!selectedTransmission || img.transmission === selectedTransmission) &&
-      img.category_name?.toLowerCase() === 'comercial' &&
-      img.photo_url && typeof img.photo_url === 'string' && img.photo_url.trim() !== '' &&
-      (searchQuery === '' ||
-        img.brand_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        img.model_name?.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  console.log('selectedTransmission:', selectedTransmission);
+
+
+  const filters = images.filter((img) => {
+    if (!selectedTransmission) {
+      // Sem filtro de transmissão, retorna todos os comerciais válidos
+      return (
+        img.category_name?.toLowerCase() === 'comercial' &&
+        img.photo_url && typeof img.photo_url === 'string' && img.photo_url.trim() !== '' &&
+        (searchQuery === '' ||
+          img.brand_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          img.model_name?.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+    }
+    if (selectedTransmission === 'manual' || selectedTransmission === 'automatica') {
+      return (
+        img.transmission === transmissionKeyToId[selectedTransmission] &&
+        img.category_name?.toLowerCase() === 'comercial' &&
+        img.photo_url && typeof img.photo_url === 'string' && img.photo_url.trim() !== '' &&
+        (searchQuery === '' ||
+          img.brand_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          img.model_name?.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+    }
+    return false;
+  });
+
   // Função para atribuir icons às opções dos filtros
   const getFilterIcon = (cat: string, isActive: boolean) => {
     const iconColor = isActive ? '#000' : '#fff';
@@ -112,7 +130,10 @@ export default function ComerciaisPage() {
           (v: any) =>
             v.category_name?.toLowerCase() === 'comercial' &&
             v.photo_url && typeof v.photo_url === 'string' && v.photo_url.trim() !== ''
-        );
+        ).map((v: any) => ({
+          ...v,
+          transmission: Number(v.transmission),
+        }));
         setImages(filtered);
       })
       .catch(() => { });
@@ -139,7 +160,9 @@ export default function ComerciaisPage() {
         {/* Filtros superiores */}
         <FiltrosSuperiores
           options={transmissionOptions}
-          onSelect={(key) => setSelectedTransmission(key as 'manual' | 'automatica' | '')}
+          onSelect={(key) => {
+            setSelectedTransmission(key as 'manual' | 'automatica' | '');
+          }}
           selectedKey={selectedTransmission}
         />
 
@@ -175,12 +198,17 @@ export default function ComerciaisPage() {
         </View>
       </View >
 
-      {/* Componente Lista dos Veiculos */}
-      <ListagemFotos
-        photo_url={filters}
-        BASE_URL={BASE_URL}
-        from="categories/comerciais"
-      />
+      {filters.length === 0 ? (
+        <Text style={{ textAlign: 'center', marginTop: 20 }}>
+          Nenhum veículo encontrado para o filtro selecionado.
+        </Text>
+      ) : (
+        <ListagemFotos
+          photo_url={filters}
+          BASE_URL={BASE_URL}
+          from="categories/comerciais"
+        />
+      )}
     </View >
   );
 }

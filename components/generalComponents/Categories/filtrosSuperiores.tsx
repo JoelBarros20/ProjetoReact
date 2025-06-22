@@ -36,14 +36,17 @@ export default function TransmissionFilterRow({
             ListHeaderComponent={<View style={{ width: 10 }} />}
             renderItem={({ item }) => (
                 <View onStartShouldSetResponder={() => !isScrolling}>
-                    <TouchableOpacity style={styles.ContainerButtonFiltersTop} disabled={isScrolling} >
+                    <TouchableOpacity
+                        style={styles.ContainerButtonFiltersTop}
+                        disabled={isScrolling}
+                        onPress={() => onSelect(item.key)} // <-- Adicione isto!
+                    >
                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
                             <MaterialIcons name={item.icon} size={16} color={'#FFF'} />
                             <Text style={styles.TextButtonFilters}>{item.label}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-
             )}
         />
     );
