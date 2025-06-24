@@ -103,8 +103,8 @@ export default function LoginScreen() {
       </ImageBackground>
 
       <View style={styles.content}>
-        <Text style={styles.title}>Welcome Back</Text>
-        <Text style={styles.subtitle}>Login to your account</Text>
+        <Text style={styles.title}>Bemvindo à Car Rent</Text>
+        <Text style={styles.subtitle}>Faça login na sua conta</Text>
 
         <Text style={styles.label}>Username</Text>
         <View style={styles.inputContainer}>
@@ -121,23 +121,10 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.optionsContainer}>
-          <View style={styles.checkboxContainer}>
-            <Checkbox status={rememberMe ? 'checked' : 'unchecked'} onPress={() => setRememberMe(!rememberMe)} />
-            <Text>Remember me</Text>
-          </View>
-          <TouchableOpacity>
-            <Text style={styles.forgotPassword}>Forgot Password?</Text>
-          </TouchableOpacity>
-        </View>
-
         <TouchableOpacity onPress={handleLogin} style={styles.loginButtonContainer}>
           <LinearGradient colors={["#444", "#222"]} style={styles.loginButton}>
             <Text style={styles.loginText}>Login</Text>
           </LinearGradient>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push('/signin')}>
-          <Text style={styles.signupText}>Don't have an account? <Text style={styles.signupLink}>Sign Up</Text></Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

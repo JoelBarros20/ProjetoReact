@@ -85,7 +85,14 @@ const styles = StyleSheet.create({
         borderColor: '#000',
         borderWidth: 1,
         width: width * 0.45,
-    }
+    },
+
+      ListTitle: {
+        color: '#000',
+        fontSize: width * 0.045,
+        fontFamily: 'Poppins-Bold',
+        marginLeft: width * 0.04,
+    },
 });
 
 export default styles;

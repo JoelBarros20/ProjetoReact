@@ -47,7 +47,6 @@ export default function WelcomeScreen() {
   }
 
   //console.log("Pagina de Log")
-
   return (
     <ImageBackground source={{ uri: assets[0]?.localUri ?? "" }}
       style={styles.backgroundImage}
@@ -63,7 +62,7 @@ export default function WelcomeScreen() {
           />
 
           <View style={styles.textWrapper}>
-            <Text style={styles.title}>Welcome to</Text>
+            <Text style={styles.title}>Bemvindo à</Text>
           </View>
         </View>
         <View style={styles.buttonWrapper}>
@@ -75,12 +74,6 @@ export default function WelcomeScreen() {
             </LinearGradient>
           </TouchableOpacity>
 
-          {/* Ao clicar no botão leva o utilizador até à página de Sign In */}
-          <TouchableOpacity onPress={() => router.push('/signin')} style={styles.buttonContainer}>
-            <LinearGradient colors={['#ffffff99', '#ffffff55']} style={styles.button}>
-              <Text style={styles.buttonText}>Sign in</Text>
-            </LinearGradient>
-          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </ImageBackground >

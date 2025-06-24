@@ -15,4 +15,5 @@ export const API_ROUTES = {
   VEHICLES: `${BASE_URL}/api/vehicles`,	
   CUSTOMER_NAME: `${BASE_URL}/api/customer/{id}`,
   CATEGORIES: `${BASE_URL}/api/categories`,
+  RESERVATIONS: `${BASE_URL}/api/reserves`,
 };
