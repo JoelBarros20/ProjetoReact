@@ -1,7 +1,9 @@
 // Ficheiro env para colocar variáveis sensiveis 
 
+import { features } from "process";
+
 // IP e Porta 
-const LOCAL_IP = "192.168.1.83";
+const LOCAL_IP = "192.168.1.86";
 const PORT = "8000";
 
 // Construção do URL com o IP e a Porta
@@ -16,4 +18,5 @@ export const API_ROUTES = {
   CUSTOMER_NAME: `${BASE_URL}/api/customer/{id}`,
   CATEGORIES: `${BASE_URL}/api/categories`,
   RESERVATIONS: `${BASE_URL}/api/reserves`,
+  FEATURES: `${BASE_URL}/api/features`,
 };

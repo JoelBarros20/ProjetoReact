@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         width: width * 0.45,
     },
 
-      ListTitle: {
+    ListTitle: {
         color: '#000',
         fontSize: width * 0.045,
         fontFamily: 'Poppins-Bold',

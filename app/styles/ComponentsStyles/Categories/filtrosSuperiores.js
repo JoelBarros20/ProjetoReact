@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
         paddingVertical: height * 0.012,
         paddingHorizontal: width * 0.02,
         borderRadius: width * 0.02,
-        width: width * 0.30,
+        width: width * 0.53,
         alignItems: 'center',
         marginBottom: height * 0.02,
     },
-    
+
     TextButtonFilters: {
         color: '#fff',
         fontWeight: 'bold',

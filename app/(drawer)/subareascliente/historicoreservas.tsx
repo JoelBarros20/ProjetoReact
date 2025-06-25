@@ -7,7 +7,7 @@ import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import styles from '@/app/styles/Customer/ReservasCliente';
+import styles from '@/app/styles/Customer/HistoricoReservas';
 
 import { API_ROUTES } from '@/env';
 
@@ -106,7 +106,7 @@ export default function ClienteReservasPage() {
                 <MaterialIcons name="menu" size={30} color="#fff" />
               </TouchableOpacity>
             </View>
-            <Text style={styles.Title}> Minhas Reservas </Text>
+            <Text style={styles.Title}> Histórico de Reservas </Text>
             <View style={styles.spacer} />
           </View>
 
@@ -116,10 +116,10 @@ export default function ClienteReservasPage() {
 
           {/* Filtros */}
           <View style={[styles.containerFilters]}>
-            <View style={{ flexDirection: 'row', gap: 10, flex: 1 }}>
+            <View style={{ flexDirection: 'row' }}>
               {/* DateTime Picker */}
               <View style={{ flex: 1 }}>
-                <View style={[styles.FirstDateTimePicker, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10 }]}>
+                <View style={[styles.FirstDateTimePicker, { alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10 }]}>
                   <FontAwesome name="calendar" size={20} color="#000" />
 
                   <TouchableOpacity
@@ -143,6 +143,7 @@ export default function ClienteReservasPage() {
 
             </View>
           </View>
+
           {/* Barra de pesquisa */}
           <View style={styles.ContainerAllContent}>
             <View style={{ paddingRight: height * 0.016 }}>

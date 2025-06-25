@@ -3,9 +3,9 @@ import { View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
+import { API_ROUTES } from '@/env';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_ROUTES } from '@/env';
 
 import styles from '@/app/styles/OutrasPaginas/CategoriesPage';
 
@@ -31,24 +31,23 @@ export default function CategoriesGrid() {
         desportivos: 'desportivos'
     };
 
-
- useEffect(() => {
-    fetch(API_ROUTES.CATEGORIES)
-        .then(res => res.json())
-        .then(data => {
-            // Se data for array de strings, converte para objetos
-            let categoriesArray = data;
-            if (Array.isArray(data) && typeof data[0] === 'string') {
-                categoriesArray = data.map((name: string, idx: number) => ({
-                    id: idx + 1,
-                    nome: name
-                }));
-            }
-            setCategories(categoriesArray);
-            setLoading(false); // <- Não esqueça de parar o loading!
-        })
-        .catch(() => setLoading(false));
-}, []);
+    useEffect(() => {
+        fetch(API_ROUTES.CATEGORIES)
+            .then(res => res.json())
+            .then(data => {
+                // Se data for array de strings, converte para objetos
+                let categoriesArray = data;
+                if (Array.isArray(data) && typeof data[0] === 'string') {
+                    categoriesArray = data.map((name: string, idx: number) => ({
+                        id: idx + 1,
+                        nome: name
+                    }));
+                }
+                setCategories(categoriesArray);
+                setLoading(false); // <- Não esqueça de parar o loading!
+            })
+            .catch(() => setLoading(false));
+    }, []);
 
     const getIconComponent = (categoryName: string) => {
         if (!categoryName) {

@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         paddingBottom: height * 0.02,
         borderTopLeftRadius: width * 0.05,
         borderTopRightRadius: width * 0.05,
-        height: height * 0.65,
+        height: height * 0.66,
         alignContent: 'center',
         flexDirection: 'column',
     },
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
 
     modalHeaderClearButton: {
         color: '#fff',
-        textDecorationLine: 'underline',
         fontSize: width * 0.038,
     },
 
@@ -57,33 +56,6 @@ const styles = StyleSheet.create({
         marginBottom: height * 0.03,
     },
 
-    sortButtonActive: {
-        backgroundColor: '#fff',
-        borderColor: '#b30000',
-        borderWidth: 1,
-    },
-
-    sortButtonText: {
-        color: '#fff',
-        fontSize: width * 0.035,
-        fontWeight: '500',
-    },
-
-    sortButtonTextActive: {
-        color: '#000',
-        fontWeight: 'bold',
-    },
-
-    sortButton: {
-        paddingVertical: height * 0.015,
-        paddingHorizontal: width * 0.03,
-        borderRadius: width * 0.025,
-        backgroundColor: '#b30000',
-        alignItems: 'center',
-        width: width * 0.35,
-        flexShrink: 0,
-    },
-
     ExtrasButtonActive: {
         backgroundColor: '#fff',
         borderColor: '#b30000',
@@ -98,7 +70,6 @@ const styles = StyleSheet.create({
 
     ExtrasButtonTextActive: {
         color: '#000',
-        fontWeight: 'bold',
     },
 
     ExtrasButton: {
@@ -108,7 +79,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#b30000',
         alignItems: 'center',
         width: width * 0.35,
-        flexShrink: 0,
+        borderWidth: 1,
+        borderColor: 'transparent',
     },
 
     SeatsButtonActive: {
@@ -135,7 +107,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#b30000',
         alignItems: 'center',
         width: width * 0.35,
-        flexShrink: 0,
+        borderWidth: 1,
+        borderColor: 'transparent',
     },
 
     ViewContainerApplyFilters: {
@@ -143,7 +116,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         paddingBottom: height * 0.01,
-        marginBottom: height * 0.01,
+        marginBottom: height * 0.03,
         paddingHorizontal: width * 0.04,
     },
 
@@ -155,12 +128,70 @@ const styles = StyleSheet.create({
         height: height * 0.07,
         alignItems: 'center',
         justifyContent: 'center',
+
     },
 
     TextButtonApplyFilters: {
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 22
+    },
+
+    FuelsButtonActive: {
+        backgroundColor: '#fff',
+        borderColor: '#b30000',
+        borderWidth: 1,
+    },
+
+    FuelsButtonText: {
+        color: '#fff',
+        fontSize: width * 0.035,
+        fontWeight: '500',
+    },
+
+    FuelsButtonTextActive: {
+        color: '#000',
+        fontWeight: 'bold',
+    },
+
+    FuelsButton: {
+        paddingHorizontal: width * 0.03,
+        paddingVertical: height * 0.015,
+        borderRadius: width * 0.025,
+        backgroundColor: '#b30000',
+        alignItems: 'center',
+        width: width * 0.35,
+        borderWidth: 1,
+        borderColor: 'transparent',
+    },
+
+    DoorsButtonActive: {
+        backgroundColor: '#fff',
+        borderColor: '#b30000',
+        borderWidth: 1,
+    },
+
+    DoorsButtonText: {
+        color: '#fff',
+        fontSize: width * 0.035,
+        fontWeight: '500',
+    },
+
+    DoorsButtonTextActive: {
+        color: '#000',
+        fontWeight: 'bold',
+    },
+
+    DoorsButton: {
+        paddingVertical: height * 0.015,
+        paddingHorizontal: width * 0.03,
+        borderRadius: width * 0.025,
+        backgroundColor: '#b30000',
+        alignItems: 'center',
+        width: width * 0.35,
+        borderWidth: 1,
+        borderColor: 'transparent',
+
     },
 
 });

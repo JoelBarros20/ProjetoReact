@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         borderRadius: width * 0.02,
         borderColor: '#000',
         borderWidth: 1,
-        width: width * 0.45,
+        width: width * 0.928,
         height: height * 0.05,
         alignItems: 'center',
         flexDirection: 'row'
@@ -85,7 +85,14 @@ const styles = StyleSheet.create({
         borderColor: '#000',
         borderWidth: 1,
         width: width * 0.45,
-    }
+    },
+
+    ListTitle: {
+        color: '#000',
+        fontSize: width * 0.045,
+        fontFamily: 'Poppins-Bold',
+        marginLeft: width * 0.04,
+    },
 });
 
 export default styles;

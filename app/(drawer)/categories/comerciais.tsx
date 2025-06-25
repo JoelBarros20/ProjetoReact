@@ -19,6 +19,10 @@ type VehicleImage = {
   model_name: string;
   transmission: number;
   category_name: string;
+  features?: string[] | number[];
+  fuel?: string | number;
+  door?: number;
+  capacity?: number;
 };
 
 type TransmissionOption = {
@@ -31,95 +35,126 @@ export default function ComerciaisPage() {
 
   // Variável com valor fixo
   const [isModalVisible, setModalVisible] = useState(false); // mostrar ou esconder o modal dos filtros
-  const [sortOption, setSortOption] = useState("sort"); // controlar as opções dos filtros do modal
-  const [featuresOption, setfeaturesOptions] = useState("featured"); // controlar as opções dos filtros do modal
-  const [numberOfSeat, setNumberOfSeats] = useState("numberSeats"); // controlar as opções dos filtros do modal
+  const [featuresOption, setfeaturesOptions] = useState('');
+  const [numberOfSeat, setNumberOfSeats] = useState('');
   const [searchQuery, setSearchQuery] = useState(''); // valor atual do searchinput
   const [images, setImages] = useState<VehicleImage[]>([]); // armazenar as imagens vindas da API
+  const [featuresOptions, setFeaturesOptions] = useState<{ key: string, label: string }[]>([]);
+  const [pendingFeaturesOption, setPendingFeaturesOption] = useState('');
+  const [pendingNumberOfSeat, setPendingNumberOfSeat] = useState('');
+  const [fuelOption, setFuelOption] = useState('');
+  const [pendingFuelOption, setPendingFuelOption] = useState('');
+  const [doorOption, setDoorOption] = useState('');
+  const [pendingDoorOption, setPendingDoorOption] = useState('');
+  const [selectedTransmission, setSelectedTransmission] = useState<'manual' | 'automatica' | ''>('');
 
   const toggleModal = () => { setModalVisible(!isModalVisible) };
-  const onChangeSearch = (query: string) => setSearchQuery(query);
 
   // Função para limpar os filtros do modal
-  const clearFilters = () => { setSortOption("sort"), setfeaturesOptions("featured"), setNumberOfSeats("numberSeats") };
+  const clearFilters = () => { setPendingFeaturesOption(''), setPendingNumberOfSeat(''), setPendingFuelOption(''), setPendingDoorOption('') };
 
   const transmissionKeyToId = {
     manual: 1,
     automatica: 2,
   };
 
-  // Listas para popular os flatlists dos filtros com opções
-  const sortOptions = [
-    { key: 'featured', label: 'Featured' },
-    { key: 'highest', label: 'Highest price' },
-    { key: 'lowest', label: 'Lowest price' },
-  ];
-
-  // Listas para popular os flatlists dos filtros com opções
-  const featuresOptions = [
-    { key: 'AC', label: 'AC' },
-    { key: 'Extra 1', label: 'Extra 1' },
-    { key: 'Extra 2', label: 'Extra 2' },
-  ];
-
-  // Listas para popular os flatlists dos filtros com opções
+  //Lista de valores para popular os flatlists dos filtros com opções e filtrar
   const numberOfSeats = [
-    { key: '4', label: '4' },
+    { key: '3', label: '3' },
     { key: '5', label: '5' },
     { key: '7', label: '7' },
     { key: '8', label: '8' },
   ];
 
-  // Listas para popular os flatlists dos filtros com opções
   const transmissionOptions: TransmissionOption[] = [
-    { key: 'automatica', label: 'Automática', icon: 'drive-eta' },
-    { key: 'manual', label: 'Manual', icon: 'build' },
+    { key: 'automatica', label: 'Transmissão Automática', icon: 'drive-eta' },
+    { key: 'manual', label: 'Transmissão Manual', icon: 'build' },
   ];
 
-  const [selectedTransmission, setSelectedTransmission] = useState<'manual' | 'automatica' | ''>('');
+  const fuelOptions = [
+    { key: '1', label: 'Diesel' },
+    { key: '2', label: 'Gasolina' },
+    { key: '3', label: 'Etanol' },
+    { key: '4', label: 'Biodiesel' },
+    { key: '5', label: 'GNV' },
+    { key: '6', label: 'Eletricidade' },
+  ];
 
-  console.log('selectedTransmission:', selectedTransmission);
+  const doorOptions = [
+    { key: '2', label: '2' },
+    { key: '3', label: '3' },
+    { key: '5', label: '5' },
+  ];
 
+  const openModal = () => {
+    setPendingFeaturesOption(featuresOption);
+    setPendingNumberOfSeat(numberOfSeat);
+    setModalVisible(true);
+    setPendingFuelOption(fuelOption);
+    setPendingDoorOption(doorOption);
+
+  };
+
+  const applyFilters = () => {
+    setfeaturesOptions(pendingFeaturesOption);
+    setNumberOfSeats(pendingNumberOfSeat);
+    setFuelOption(pendingFuelOption);
+    setDoorOption(pendingDoorOption);
+  };
 
   const filters = images.filter((img) => {
-    if (!selectedTransmission) {
-      // Sem filtro de transmissão, retorna todos os comerciais válidos
-      return (
-        img.category_name?.toLowerCase() === 'comercial' &&
-        img.photo_url && typeof img.photo_url === 'string' && img.photo_url.trim() !== '' &&
-        (searchQuery === '' ||
-          img.brand_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          img.model_name?.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
-    }
-    if (selectedTransmission === 'manual' || selectedTransmission === 'automatica') {
-      return (
-        img.transmission === transmissionKeyToId[selectedTransmission] &&
-        img.category_name?.toLowerCase() === 'comercial' &&
-        img.photo_url && typeof img.photo_url === 'string' && img.photo_url.trim() !== '' &&
-        (searchQuery === '' ||
-          img.brand_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          img.model_name?.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
-    }
-    return false;
+
+    // Filtrar por transmissão
+    const transmissionOk =
+      !selectedTransmission ||
+      img.transmission === transmissionKeyToId[selectedTransmission];
+
+    // Filtrar por categoria 
+    const categoryOk = img.category_name?.toLowerCase() === 'comercial';
+
+    // Verificar imagem váilda
+    const photoOk =
+      img.photo_url && typeof img.photo_url === 'string' && img.photo_url.trim() !== '';
+
+    // Filtro por pesquisa (marca ou modelo)
+    const searchOk =
+      !searchQuery ||
+      img.brand_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      img.model_name?.toLowerCase().includes(searchQuery.toLowerCase());
+
+    // Filtro por Features
+    const featureOk =
+      !featuresOption ||
+      (Array.isArray(img.features)
+        ? img.features.map(String).includes(featuresOption)
+        : String(img.features) === featuresOption);
+
+    // Filtro por número de lugares
+    const seatsOk =
+      !numberOfSeat ||
+      img.capacity?.toString() === numberOfSeat;
+
+    // Filtro por combustível
+    const fuelOk =
+      !fuelOption ||
+      img.fuel?.toString() === fuelOption;
+
+    // Filtro por número de portas
+    const doorsOk =
+      !doorOption ||
+      img.door?.toString() === doorOption;
+
+    return (
+      transmissionOk &&
+      categoryOk &&
+      photoOk &&
+      searchOk &&
+      featureOk &&
+      fuelOk &&
+      seatsOk &&
+      doorsOk
+    );
   });
-
-  // Função para atribuir icons às opções dos filtros
-  const getFilterIcon = (cat: string, isActive: boolean) => {
-    const iconColor = isActive ? '#000' : '#fff';
-
-    switch (cat) {
-      case 'featured':
-        return <MaterialIcons name="star" size={16} color={iconColor} />;
-      case 'highest':
-        return <MaterialIcons name="arrow-upward" size={16} color={iconColor} />;
-      case 'lowest':
-        return <MaterialIcons name="arrow-downward" size={16} color={iconColor} />;
-      default:
-        return null;
-    }
-  };
 
   // Código responsável por fazer a requisição à API (Imagens)
   useEffect(() => {
@@ -139,6 +174,21 @@ export default function ComerciaisPage() {
       .catch(() => { });
   }, []);
 
+  useEffect(() => {
+    fetch(API_ROUTES.FEATURES)
+      .then(res => res.json())
+      .then(data => {
+        // Supondo que cada feature tem id e name
+        setFeaturesOptions(
+          data.map((f: any) => ({
+            key: f.name,   // <-- agora o key é o nome do extra!
+            label: f.name
+          }))
+        );
+      })
+      .catch(() => { });
+  }, []);
+
   return (
     <View style={styles.ContainerMainPage}>
       <View style={styles.HeaderPage}>
@@ -153,7 +203,7 @@ export default function ComerciaisPage() {
 
       {/* Botão para abrir o modal com os filtros */}
       <View style={styles.ContainerFilters}>
-        <TouchableOpacity style={styles.ContainerButtonFilters} onPress={toggleModal}>
+        <TouchableOpacity style={styles.ContainerButtonFilters} onPress={openModal}>
           <Text style={styles.TextButtonFilters}>Filtros</Text>
         </TouchableOpacity>
 
@@ -161,11 +211,12 @@ export default function ComerciaisPage() {
         <FiltrosSuperiores
           options={transmissionOptions}
           onSelect={(key) => {
-            setSelectedTransmission(key as 'manual' | 'automatica' | '');
+            setSelectedTransmission(prev =>
+              prev === key ? '' : (key as 'manual' | 'automatica')
+            );
           }}
           selectedKey={selectedTransmission}
         />
-
       </View>
 
       {/* Componente Filtro Modal */}
@@ -173,16 +224,19 @@ export default function ComerciaisPage() {
         visible={isModalVisible}
         toggleModal={toggleModal}
         clearFilters={clearFilters}
-        sortOptions={sortOptions}
-        sortOption={sortOption}
-        setSortOption={setSortOption}
-        featuresOptions={featuresOptions}
-        featuresOption={featuresOption}
-        setfeaturesOptions={setfeaturesOptions}
-        numberOfSeats={numberOfSeats}
-        numberOfSeat={numberOfSeat}
-        setNumberOfSeats={setNumberOfSeats}
-        getFilterIcon={getFilterIcon}
+        featuresOptionsArray={featuresOptions}
+        featuresOptionAtual={pendingFeaturesOption}
+        setfeaturesOptionsFunction={setPendingFeaturesOption}
+        numberOfSeatsArray={numberOfSeats}
+        numberOfSeatAtual={pendingNumberOfSeat}
+        fuelOptionsArray={fuelOptions}
+        fuelOptionAtual={pendingFuelOption}
+        setFuelOptionsFunction={setPendingFuelOption}
+        setNumberOfSeatsFunction={setPendingNumberOfSeat}
+        doorsOptionsArray={doorOptions}
+        doorOptionAtual={pendingDoorOption}
+        setDoorOptionsFunction={setPendingDoorOption}
+        onApplyFilters={applyFilters}
       />
 
 

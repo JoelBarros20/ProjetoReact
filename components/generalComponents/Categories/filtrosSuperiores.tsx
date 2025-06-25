@@ -25,7 +25,7 @@ export default function TransmissionFilterRow({
     const [isScrolling, setIsScrolling] = useState(false);
 
     return (
-        <FlatList style={{}} data={options} keyExtractor={(item) => item.key} horizontal
+        <FlatList data={options} keyExtractor={(item) => item.key} horizontal
             onScrollBeginDrag={() => setIsScrolling(true)}
             onScrollEndDrag={() => setIsScrolling(false)}
             onMomentumScrollEnd={() => setIsScrolling(false)}
@@ -33,21 +33,44 @@ export default function TransmissionFilterRow({
             showsHorizontalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
             contentContainerStyle={{ gap: 10 }}
-            ListHeaderComponent={<View style={{ width: 10 }} />}
-            renderItem={({ item }) => (
-                <View onStartShouldSetResponder={() => !isScrolling}>
-                    <TouchableOpacity
-                        style={styles.ContainerButtonFiltersTop}
-                        disabled={isScrolling}
-                        onPress={() => onSelect(item.key)} // <-- Adicione isto!
-                    >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                            <MaterialIcons name={item.icon} size={16} color={'#FFF'} />
-                            <Text style={styles.TextButtonFilters}>{item.label}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            )}
+            ListHeaderComponent={<View />}
+            renderItem={({ item }) => {
+                const isSelected = selectedKey === item.key;
+                return (
+                    <View onStartShouldSetResponder={() => !isScrolling}>
+                        <TouchableOpacity
+                            style={[
+                                // cor de fundo quando selecionado
+                                styles.ContainerButtonFiltersTop,
+                                isSelected && {
+                                    backgroundColor: '#fff',
+                                    borderColor: '#b30000',
+                                    borderWidth: 1,
+
+                                }
+                            ]}
+                            disabled={isScrolling}
+                            onPress={() => onSelect(item.key)}
+                        >
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                                <MaterialIcons
+                                    name={item.icon}
+                                    size={18}
+                                    // ícone branco se selecionado, azul se não
+                                    color={isSelected ? '#000' : '#fff'}
+                                />
+                                <Text style={[
+                                    styles.TextButtonFilters,
+                                    // texto branco e bold se selecionado
+                                    isSelected && { color: '#000' }
+                                ]}>
+                                    {item.label}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                );
+            }}
         />
     );
 }
