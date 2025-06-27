@@ -110,7 +110,7 @@ export default function ComerciaisPage() {
       img.transmission === transmissionKeyToId[selectedTransmission];
 
     // Filtro por categoria (comercial)
-    const categoryOk = img.category_name?.toLowerCase() === 'SUV';
+    const categoryOk = img.category_name?.toLowerCase() === 'suv';
 
     // Filtro por foto válida
     const photoOk =
@@ -161,7 +161,7 @@ export default function ComerciaisPage() {
       .then((data) => {
         const filtered = data.filter(
           (v: any) =>
-            v.category_name?.toLowerCase() === 'SUV' &&
+            v.category_name?.toLowerCase() === 'suv' &&
             v.photo_url && typeof v.photo_url === 'string' && v.photo_url.trim() !== ''
         ).map((v: any) => ({
           ...v,

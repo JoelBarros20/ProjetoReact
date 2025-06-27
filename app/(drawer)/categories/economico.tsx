@@ -21,7 +21,7 @@ type VehicleImage = {
   category_name: string;
   features?: string[] | number[];
   fuel?: string | number;
-  doors?: number;
+  door?: number;
   capacity?: number;
 };
 
@@ -91,6 +91,8 @@ export default function ComerciaisPage() {
   const openModal = () => {
     setPendingFeaturesOption(featuresOption);
     setPendingNumberOfSeat(numberOfSeat);
+    setPendingFuelOption(fuelOption);
+    setPendingDoorOption(doorOption);
     setModalVisible(true);
   };
 
@@ -138,7 +140,7 @@ export default function ComerciaisPage() {
 
     const doorsOk =
       !doorOption ||
-      img.doors?.toString() === doorOption;
+      img.door?.toString() === doorOption;
 
     return (
       transmissionOk &&

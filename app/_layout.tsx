@@ -86,6 +86,7 @@ export default function RootLayout() {
         <Stack.Screen name="Stack" />
         <Stack.Screen name="subareascliente" />
         <Stack.Screen name="viaturasdetalhes" />
+        <Stack.Screen name="pesquisar_viaturas" />
       </Stack>
     </ThemeProvider>
   );

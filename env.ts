@@ -3,7 +3,7 @@
 import { features } from "process";
 
 // IP e Porta 
-const LOCAL_IP = "192.168.1.86";
+const LOCAL_IP = "192.168.1.83";
 const PORT = "8000";
 
 // Construção do URL com o IP e a Porta
@@ -19,4 +19,6 @@ export const API_ROUTES = {
   CATEGORIES: `${BASE_URL}/api/categories`,
   RESERVATIONS: `${BASE_URL}/api/reserves`,
   FEATURES: `${BASE_URL}/api/features`,
+  INSURANCES: `${BASE_URL}/api/insurances`,
+  STANDS: `${BASE_URL}/api/stands`,
 };

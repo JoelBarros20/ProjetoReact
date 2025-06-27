@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
 
     infoSection: {
-        padding: width * 0.05,
+        padding: width * 0.04,
         backgroundColor: '#F5F4F9'
     },
 
@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         color: '#111',
-        marginBottom: height * 0.007
+        marginBottom: height * 0.007,
+        marginLeft: width * 0.01
     },
 
     subtitle: {
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     specsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        // gap: width * 0.04
+        paddingHorizontal: width * 0.01,
     },
 
     specItem: {
@@ -77,9 +78,8 @@ const styles = StyleSheet.create({
 
     sectionTitle: {
         color: '#111',
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold',
-        marginLeft: width * 0.01
     },
 
     optionTitle: {
@@ -87,11 +87,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: height * 0.02,
+
     },
 
     containerPrice: {
-        flexDirection: 'row',
-        alignItems: 'center'
+
     },
 
     ContainerMenu: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         paddingBottom: height * 0.01,
         marginBottom: height * 0.01,
         paddingHorizontal: width * 0.04,
-        marginTop: height * 0.03,
+        marginTop: height * 0.015,
     },
 
     ContainerButtonOffers: {

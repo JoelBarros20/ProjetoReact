@@ -23,10 +23,18 @@ type Vehicle = {
   id: number;
   photo: string;
   base_price_day: number;
+  base_price_month: number;
   brand_name: string;
   model_name: string;
   category_name: string;
+  fuel: string;
+  features?: string[] | number[];
+  transmission: string;
+  capacity: number;
   photo_url: string;
+  door: number;
+  stand_name: string;
+
 };
 
 const { width, height } = Dimensions.get('window');
@@ -179,7 +187,15 @@ export default function HomePageScreen() {
                           imageBase64: item.photo_url,
                           brand_name: item.brand_name,
                           model_name: item.model_name,
-                          preco: item.base_price_day,
+                          category_name: item.category_name,
+                          fuel: String(item.fuel),
+                          transmission: String(item.transmission),
+                          capacity: item.capacity,
+                          base_price_day: item.base_price_day,
+                          features: JSON.stringify(item.features),
+                          doors: item.door || 'Dados Viatura',
+                          stand_name: item.stand_name,
+                          base_price_month: item.base_price_month,
                           // Adiciona outros campos se necessário
                         }
                       })}

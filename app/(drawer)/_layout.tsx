@@ -24,6 +24,7 @@ export default function DrawerLayout() {
         <Drawer.Screen name="homepage" options={{ title: 'Home' }} />
         <Drawer.Screen name="categories" options={{ title: 'Categorias' }} />
         <Drawer.Screen name="stack" options={{ title: 'Detalhes' }} />
+        <Drawer.Screen name="pesquisar_viaturas" options={{ title: 'Pesquisar Viaturas' }} />
 
       </Drawer>
     </SessionWrapper>
