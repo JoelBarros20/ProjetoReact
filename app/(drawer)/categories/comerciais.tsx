@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 import { API_ROUTES, BASE_URL } from '@/env';
 import { Searchbar } from 'react-native-paper';
@@ -21,7 +22,7 @@ type VehicleImage = {
   category_name: string;
   features?: string[] | number[];
   fuel?: string | number;
-  door?: number;
+  door?: number; 
   capacity?: number;
 };
 
@@ -47,6 +48,8 @@ export default function ComerciaisPage() {
   const [doorOption, setDoorOption] = useState('');
   const [pendingDoorOption, setPendingDoorOption] = useState('');
   const [selectedTransmission, setSelectedTransmission] = useState<'manual' | 'automatica' | ''>('');
+
+  const router = useRouter();
 
   const toggleModal = () => { setModalVisible(!isModalVisible) };
 
@@ -168,6 +171,7 @@ export default function ComerciaisPage() {
         ).map((v: any) => ({
           ...v,
           transmission: Number(v.transmission),
+          door: v.door ?? 0,
         }));
         setImages(filtered);
       })
@@ -258,11 +262,24 @@ export default function ComerciaisPage() {
         </Text>
       ) : (
         <ListagemFotos
-          photo_url={filters}
+          photo_url={filters.map(vehicle => ({
+            ...vehicle,
+            door: vehicle.door ?? 0 // garante que door nunca será undefined
+          }))}
           BASE_URL={BASE_URL}
           from="categories/comerciais"
+          onPressDetalhes={(item) => {
+            router.push({
+              pathname: '/stack/viaturasdetalhes',
+              params: {
+                ...item,
+                photo_url: item.photo_url
+              }
+            });
+          }}
         />
       )}
     </View >
   );
 }
+

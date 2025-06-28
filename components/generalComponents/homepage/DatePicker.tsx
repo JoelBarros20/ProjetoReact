@@ -184,10 +184,13 @@ export default function AnimatedPages() {
                 <TouchableOpacity
                     style={styles.SecondContainerButton}
                     onPress={() => {
+
+                        const standName = stands.find(s => String(s.id) === selectedStand)?.name || '';
+                        console.log('Pesquisar clicado', { selectedStand, dataInicio, horaInicio, dataFim, horaFim });
                         router.push({
                             pathname: '/pesquisar_viaturas',
                             params: {
-                                standId: selectedStand,
+                                standId: standName,
                                 dataInicio,
                                 horaInicio,
                                 dataFim,

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, ScrollView, Dimensions } from "react-native";
+import { useLocalSearchParams } from 'expo-router';
+
 import { useRouter } from "expo-router";
 
 import SideMenu from "@/components/generalComponents/Menu/SideMenu";
@@ -12,9 +14,22 @@ const { width, height } = Dimensions.get("window");
 
 export default function SeguroPage() {
 
+
+    const params = useLocalSearchParams();
+    const dataInicio = Array.isArray(params.dataInicio) ? params.dataInicio[0] : params.dataInicio;
+    const horaInicio = Array.isArray(params.horaInicio) ? params.horaInicio[0] : params.horaInicio;
+    const dataFim = Array.isArray(params.dataFim) ? params.dataFim[0] : params.dataFim;
+    const horaFim = Array.isArray(params.horaFim) ? params.horaFim[0] : params.horaFim;
+    const selectedStand = Array.isArray(params.selectedStand) ? params.selectedStand[0] : params.selectedStand;
+    const precoTotal = Array.isArray(params.precoTotal) ? params.precoTotal[0] : params.precoTotal;
+
     const [options, setOptions] = useState<any[]>([]);
     const [selected, setSelected] = useState<string | null>(null);
     const router = useRouter();
+
+    const seguroSelecionado = options.find(opt => opt.id === selected);
+    const valorSeguro = seguroSelecionado && seguroSelecionado.value ? parseFloat(seguroSelecionado.value) : 0;
+    const totalComSeguro = (parseFloat(precoTotal || "0") + valorSeguro).toFixed(2);
 
     useEffect(() => {
         fetch(API_ROUTES.INSURANCES)
@@ -27,7 +42,7 @@ export default function SeguroPage() {
     }, []);
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: "#fff"}} edges={['left', 'right']}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }} edges={['left', 'right']}>
             <View style={{ flex: 1, backgroundColor: "#fff" }}>
                 <ScrollView contentContainerStyle={{ padding: width * 0.05, paddingBottom: height * 0.15 }}>
                     <SideMenu iconColor="#000" />
@@ -61,10 +76,27 @@ export default function SeguroPage() {
                 <View style={styles.footer}>
                     <View style={styles.row}>
                         <Text style={styles.totalLabel}>Total</Text>
-                        <Text style={styles.totalValue}>91,99 €</Text>
+                        <Text style={styles.totalValue}>
+                            {totalComSeguro} €
+                        </Text>
                     </View>
                     <TouchableOpacity style={styles.continueButton}
-                        onPress={() => router.push('/stack/confirmpayments')} >
+                        onPress={() => {
+                            console.log('seguroSelecionado', seguroSelecionado);
+                            router.push({
+                                pathname: '/stack/confirmpayments',
+                                params: {
+                                    ...params,
+                                    selectedInsurance: selected,
+                                    totalComSeguro,
+                                    insurance_name: seguroSelecionado?.name,
+                                    insurance_value: seguroSelecionado?.value,
+                                    id: params.id,
+                                }
+                            })
+                        }}
+                        disabled={!selected}
+                    >
                         <Text style={styles.continueText}>Continuar</Text>
                     </TouchableOpacity>
                 </View>

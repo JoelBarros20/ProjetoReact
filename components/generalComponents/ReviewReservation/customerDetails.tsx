@@ -10,17 +10,12 @@ export default function CustomerDetails() {
 
     return (
         <View>
-            <Text style={styles.sectionTitle}>Detalhes do Condutor</Text>
+            <Text style={styles.sectionTitle}>Detalhes do Utilizador</Text>
 
             <View style={styles.inlineGroup}>
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.label}>Primeiro Nome</Text>
+                    <Text style={styles.label}>Nome Completo</Text>
                     <TextInput style={styles.input} value="Joel" placeholderTextColor="#999" />
-                </View>
-
-                <View style={{ flex: 1 }}>
-                    <Text style={styles.label}>Último Nome</Text>
-                    <TextInput style={styles.input} value="Barros" placeholderTextColor="#999" />
                 </View>
             </View>
 
@@ -51,14 +46,6 @@ export default function CustomerDetails() {
             <View style={styles.fieldBlock}>
                 <Text style={styles.label}>Número de Telefone</Text>
                 <TextInput style={styles.input} value='' placeholderTextColor="#999" />
-            </View>
-
-
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.ContainerButtonOffers}
-                    onPress={() => router.push('../payments/confirmpayments')}>
-                    <Text style={styles.ButtonOfertas}>Reservar</Text>
-                </TouchableOpacity>
             </View>
         </View>
     )

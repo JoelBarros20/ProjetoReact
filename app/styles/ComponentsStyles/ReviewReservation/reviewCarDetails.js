@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     },
 
     ImageStyle: {
-        width: width * 0.18,
-        height: width * 0.18,
+        width: width * 0.30,
+        height: width * 0.30,
         borderRadius: width * 0.03,
         marginRight: width * 0.03,
     },

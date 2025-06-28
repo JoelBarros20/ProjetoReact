@@ -34,7 +34,6 @@ export default function ClienteReservasPage() {
   const statusLabels: Record<number, string> = {
     1: 'Confirmada',
     2: 'Pendente',
-    4: 'Concluída',
   };
 
   const formatDate = (date: Date) => {
