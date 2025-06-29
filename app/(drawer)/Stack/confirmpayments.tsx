@@ -9,6 +9,7 @@ import CustomerDetails from '@/components/generalComponents/ReviewReservation/cu
 import SideMenu from '@/components/generalComponents/Menu/SideMenu';
 
 import styles from '@/app/styles/Payments/ReviewReservation'
+import { useRouter } from 'expo-router';
 import { API_ROUTES } from '@/env';
 
 const { width } = Dimensions.get('window');
@@ -35,6 +36,8 @@ export default function ReviewAndBook() {
     const horaFim = Array.isArray(params.horaFim) ? params.horaFim[0] : params.horaFim;
     const stand_name = Array.isArray(params.stand_name) ? params.stand_name[0] : params.stand_name;
     const id_vehicle = Array.isArray(params.id) ? params.id[0] : params.id;
+
+    const router = useRouter();
 
     console.log("Parâmetros recebidos:", params); // <-- Adiciona esta linha
 
@@ -113,6 +116,7 @@ export default function ReviewAndBook() {
 
             if (response.ok) {
                 alert('Reserva efetuada com sucesso!');
+                router.replace({ pathname: '/homepage', params: { reload: Date.now() } });
             } else {
                 alert('Erro ao efetuar reserva: ' + responseText);
             }
@@ -175,14 +179,26 @@ export default function ReviewAndBook() {
                         <CustomerDetails />
                     </View>
 
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.ContainerButtonOffers}
-                            onPress={handleReserva}>
-                            <Text style={styles.ButtonOfertas}>Reservar</Text>
-                        </TouchableOpacity>
-                    </View>
+
                 </View>
             </ScrollView>
+
+            <View style={{
+                marginBottom: 24,
+                padding: 16,
+                borderRadius: 10,
+
+            }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                    Preço Final: €{totalComSeguro}
+                </Text>
+            </View>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.ContainerButtonOffers}
+                    onPress={handleReserva}>
+                    <Text style={styles.ButtonOfertas}>Reservar</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 }

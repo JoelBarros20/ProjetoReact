@@ -22,7 +22,7 @@ type VehicleImage = {
   category_name: string;
   features?: string[] | number[];
   fuel?: string | number;
-  door?: number; 
+  door?: number;
   capacity?: number;
 };
 
@@ -264,7 +264,7 @@ export default function ComerciaisPage() {
         <ListagemFotos
           photo_url={filters.map(vehicle => ({
             ...vehicle,
-            door: vehicle.door ?? 0 // garante que door nunca será undefined
+            door: vehicle.door ?? 0 
           }))}
           BASE_URL={BASE_URL}
           from="categories/comerciais"

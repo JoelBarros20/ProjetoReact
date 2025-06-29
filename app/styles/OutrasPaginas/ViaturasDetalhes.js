@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     specItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '48%',
+        width: '100%',
         marginVertical: height * 0.006,
         marginRight: width * 0.04
     },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 
     ContainerMenu: {
         position: 'absolute',
-        top: 30,
+        top: 25,
         left: 16,
         zIndex: 10,
         backgroundColor: '#FFF',

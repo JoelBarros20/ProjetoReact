@@ -8,7 +8,7 @@ import styles from '@/app/styles/SearchVehicles'
 import SideMenu from '@/components/generalComponents/Menu/SideMenu';
 import FilterModal from '@/components/generalComponents/Categories/filtroModal';
 import FiltrosSuperiores from '@/components/generalComponents/Categories/filtrosSuperiores';
-import ListagemFotos from '@/components/generalComponents/Categories/listagemFotos';
+import ListagemFotos from '@/components/generalComponents/Categories/listagemFotosPesquisados';
 
 import { API_ROUTES, BASE_URL } from '@/env';
 
@@ -55,6 +55,7 @@ export default function PesquisarViaturas() {
         manual: 1,
         automatica: 2,
     };
+
 
     // Opções para filtros
     const numberOfSeats = [

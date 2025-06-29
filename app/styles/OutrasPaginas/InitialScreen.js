@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: width * 0.11,
+        fontSize: width * 0.10,
         fontWeight: 'bold',
         color: '#fff',
         textAlign: 'left',

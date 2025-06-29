@@ -13,8 +13,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const { width, height } = Dimensions.get("window");
 
 export default function SeguroPage() {
-
-
     const params = useLocalSearchParams();
     const dataInicio = Array.isArray(params.dataInicio) ? params.dataInicio[0] : params.dataInicio;
     const horaInicio = Array.isArray(params.horaInicio) ? params.horaInicio[0] : params.horaInicio;
@@ -44,34 +42,46 @@ export default function SeguroPage() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }} edges={['left', 'right']}>
             <View style={{ flex: 1, backgroundColor: "#fff" }}>
-                <ScrollView contentContainerStyle={{ padding: width * 0.05, paddingBottom: height * 0.15 }}>
-                    <SideMenu iconColor="#000" />
-                    <Text style={styles.title}>Escolha um seguro à sua medida</Text>
-                    {options.map((option) => (
-                        <TouchableOpacity
-                            key={option.id}
-                            style={[
-                                styles.card,
-                                selected === option.id && { borderColor: "#b30000", borderWidth: 2 }
-                            ]}
-                            onPress={() => setSelected(option.id)}
-                            activeOpacity={0.8}
-                        >
-                            <View style={styles.row}>
-                                <View style={styles.radioCircle}>
-                                    {selected === option.id && <View style={styles.radioSelected} />}
+                <ScrollView contentContainerStyle={{}}>
+                    <View style={styles.HeaderPage}>
+                        <SideMenu iconColor="#FFF" />
+                        <Text style={styles.HeaderTitle}>Detalhes do Seguro</Text>
+                        <View style={styles.spacer} />
+                    </View>
+                    <View style={{ paddingHorizontal: width * 0.04 }}>
+                        <Text style={styles.title}>Escolha um seguro à sua medida</Text>
+                        {options.map((option) => (
+                            <TouchableOpacity
+                                key={option.id}
+                                style={[
+                                    styles.card,
+                                    selected === option.id && { borderColor: "#b30000", borderWidth: 2 }
+                                ]}
+                                onPress={() => setSelected(option.id)}
+                                activeOpacity={0.8}
+                            >
+                                <View style={styles.row}>
+                                    <View style={styles.radioCircle}>
+                                        {selected === option.id && <View style={styles.radioSelected} />}
+                                    </View>
+                                    <Text style={styles.cardTitle}>{option.name}</Text>
                                 </View>
-                                <Text style={styles.cardTitle}>{option.name}</Text>
-                            </View>
-                            <View style={styles.row}>
-                                <Text style={styles.price}>
-                                    {option.value && parseFloat(option.value) > 0
-                                        ? `${parseFloat(option.value).toFixed(2)} €`
-                                        : "Incluído"}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))}
+                                <View style={styles.row}>
+                                    <Text style={{
+                                        fontWeight: "bold",
+                                        fontSize: width * 0.045,
+                                        marginTop: height * 0.01,
+                                        marginRight: width * 0.025,
+                                        paddingHorizontal: width * 0.08,
+                                    }}>
+                                        {option.value && parseFloat(option.value) > 0
+                                            ? `${parseFloat(option.value).toFixed(2)} €`
+                                            : "Inculído"}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
                 </ScrollView>
                 <View style={styles.footer}>
                     <View style={styles.row}>

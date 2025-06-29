@@ -32,8 +32,10 @@ export default function ClienteReservasPage() {
   };
 
   const statusLabels: Record<number, string> = {
-    1: 'Confirmada',
-    2: 'Pendente',
+    1: 'Pendente',
+    2: 'Confirmada',
+    3: 'Cancelada',
+    4: 'Concluída',
   };
 
   const formatDate = (date: Date) => {
@@ -109,12 +111,8 @@ export default function ClienteReservasPage() {
             <View style={styles.spacer} />
           </View>
 
-          <View>
-            <Text style={styles.SubTitle}> Filtros </Text>
-          </View>
-
-          {/* Filtros */}
-          <View style={[styles.containerFilters]}>
+          <Text style={styles.SubTitle}>Filtros</Text>
+          <View style={styles.containerFilters}>
             <View style={{ flexDirection: 'row', gap: 10, flex: 1 }}>
               {/* DateTime Picker */}
               <View style={{ flex: 1 }}>
@@ -175,22 +173,9 @@ export default function ClienteReservasPage() {
             </View>
           </View>
 
-          {/* Modal do DateTime Picker */}
-          <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={() => setDatePickerVisible(false)}
-            is24Hour={true}
-            locale="pt-PT"
-          />
+          <Text style={styles.ListTitle}>Lista de reservas</Text>
 
-          {/* Lista de Reservas */}
-          <View>
-            <Text style={styles.ListTitle}> Lista de reservas </Text>
-          </View>
-
-          <View style={{ flex: 1, width: '100%' }}>
+          <View style={{ flex: 1 }}>
             {loading ? (
               <ActivityIndicator size="large" color="#000" style={{ marginTop: 30 }} />
             ) : reservasFiltradas.length === 0 ? (
@@ -221,11 +206,23 @@ export default function ClienteReservasPage() {
                     <Text>Status: {statusLabels[item.status] ?? item.status}</Text>
                   </View>
                 )}
+                contentContainerStyle={{ paddingBottom: 32 }}
+                keyboardShouldPersistTaps="handled"
               />
             )}
           </View>
         </View>
       </TouchableWithoutFeedback>
+
+      {/* Modal do DateTime Picker */}
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={() => setDatePickerVisible(false)}
+        is24Hour={true}
+        locale="pt-PT"
+      />
     </Provider>
   );
 }

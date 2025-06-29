@@ -28,6 +28,8 @@ const styles = StyleSheet.create({
     ContainerInsideCard: {
         paddingHorizontal: width * 0.03,
         paddingTop: height * 0.015,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
 
     ContainerInsideButton: {

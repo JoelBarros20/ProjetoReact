@@ -124,18 +124,17 @@ export default function CustomDrawerContent(props: any) {
 
             <DrawerContentScrollView {...props} contentContainerStyle={{ paddingTop: 0 }}>
                 <View style={{ marginTop: 5, marginLeft: -5 }}>
-                    <DrawerItem
-                        label="Homepage"
-                        icon={() => <Feather name="home" size={20} color="#fff" />}
-                        labelStyle={{ color: '#fff' }}
-                        onPress={() => {
-                            if (pathname === '/') {
-                                props.navigation.closeDrawer(); // Só fecha o Drawer, não faz refresh
-                            } else {
-                                router.replace('/');
-                            }
-                        }}
-                    />
+                    {/* Só mostra o botão se não estiveres na homepage */}
+                    {pathname !== '/homepage' && (
+                        <DrawerItem
+                            label="Homepage"
+                            icon={() => <Feather name="home" size={20} color="#fff" />}
+                            labelStyle={{ color: '#fff' }}
+                            onPress={() => {
+                                router.replace('/homepage');
+                            }}
+                        />
+                    )}
 
                     <TouchableOpacity onPress={toggleAccordion} style={styles.AccordionStyle}>
                         <MaterialIcons name="category" size={20} color="#fff" />

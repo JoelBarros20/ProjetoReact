@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { View, TouchableOpacity, Text, TextInput } from 'react-native';
+import React, { useEffect, useState, useMemo } from 'react';
+import { View, TouchableOpacity, Text, TextInput, Alert } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { Ionicons } from '@expo/vector-icons';
 
 import { useRouter } from 'expo-router';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
 import { API_ROUTES } from '@/env';
 
 import styles from '@/app/styles/ComponentsStyles/Homepage/DatePicker'
 
-export default function AnimatedPages() {
+export default function AnimatedPages({ resetKey }: { resetKey?: number }) {
 
     const [localizacao, setLocalizacao] = useState('');
     const [dataInicio, setDataInicio] = useState<string | null>(null);
@@ -24,9 +25,24 @@ export default function AnimatedPages() {
     const router = useRouter();
 
     const handleConfirm = (selectedDate: Date) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Ignora horas para comparar só datas
+
         if (pickerType === 'inicio') {
+            // Valida se a data de levantamento é anterior à data atual
+            if (selectedDate < today) {
+                Alert.alert('Data inválida', 'A data de levantamento não pode ser anterior à data atual.');
+                setPickerType(null);
+                return;
+            }
             setDataInicio(formatDate(selectedDate));
         } else if (pickerType === 'fim') {
+            // Valida se a data de entrega é anterior à data de levantamento
+            if (dataInicio && selectedDate < new Date(dataInicio)) {
+                Alert.alert('Data inválida', 'A data de entrega não pode ser anterior à data de levantamento.');
+                setPickerType(null);
+                return;
+            }
             setDataFim(formatDate(selectedDate));
         } else if (pickerType === 'horaInicio') {
             setHoraInicio(formatTime(selectedDate));
@@ -53,14 +69,15 @@ export default function AnimatedPages() {
             .catch(() => setStands([]));
     }, []);
 
-    // Usa useMemo para garantir que o array só muda quando stands muda
-    const standOptions = useMemo(() => [
-        { key: '', label: 'Escolha um stand' },
-        ...stands.map(stand => ({
-            key: String(stand.id),
-            label: stand.name,
-        })),
-    ], [stands]);
+    useEffect(() => {
+        // Sempre que resetKey mudar, limpa os campos
+        setLocalizacao('');
+        setDataInicio(null);
+        setDataFim(null);
+        setHoraInicio(null);
+        setHoraFim(null);
+        setSelectedStand('');
+    }, [resetKey]);
 
     return (
         <View>
@@ -184,7 +201,6 @@ export default function AnimatedPages() {
                 <TouchableOpacity
                     style={styles.SecondContainerButton}
                     onPress={() => {
-
                         const standName = stands.find(s => String(s.id) === selectedStand)?.name || '';
                         console.log('Pesquisar clicado', { selectedStand, dataInicio, horaInicio, dataFim, horaFim });
                         router.push({

@@ -10,6 +10,7 @@ export default function DrawerLayout() {
         screenOptions={{
           headerShown: false,
           drawerType: 'front',
+          swipeEnabled: false, // Desativa o gesto de swipe para abrir o menu
           drawerInactiveTintColor: "#FFF",
           overlayColor: 'rgba(0,0,0,0.2)',
           drawerStyle: {

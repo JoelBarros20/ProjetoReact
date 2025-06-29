@@ -103,7 +103,8 @@ export default function LoginScreen() {
       </ImageBackground>
 
       <View style={styles.content}>
-        <Text style={styles.title}>Bemvindo à Car Rent</Text>
+        <Text style={styles.title}>Bem-vindo à</Text>
+        <Text style={styles.title}>Car Rent</Text>
         <Text style={styles.subtitle}>Faça login na sua conta</Text>
 
         <Text style={styles.label}>Username</Text>

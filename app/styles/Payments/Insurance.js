@@ -4,6 +4,28 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
 
+    HeaderPage: {
+        width: '100%',
+        height: height * 0.09,
+        backgroundColor: '#b30000',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: width * 0.04,
+        justifyContent: 'space-between',
+        marginBottom: height * 0.02
+    },
+
+    HeaderTitle: {
+        color: '#FFF',
+        fontSize: width * 0.05,
+        fontFamily: 'Poppins-Bold',
+        textAlign: 'center',
+    },
+
+    spacer: {
+        width: width * 0.08,
+    },
+
     title: {
         fontSize: width * 0.055,
         fontWeight: "bold",
@@ -19,7 +41,7 @@ const styles = StyleSheet.create({
         marginBottom: height * 0.022,
         elevation: 2,
         borderColor: "#eee",
-        borderWidth: 1,
+        borderWidth: 3,
     },
 
     row: {

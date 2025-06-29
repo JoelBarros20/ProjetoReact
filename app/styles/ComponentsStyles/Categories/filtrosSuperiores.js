@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
         width: width * 0.53,
         alignItems: 'center',
         marginBottom: height * 0.02,
+        borderWidth: 1,
+        borderColor: 'transparent', 
     },
 
     TextButtonFilters: {

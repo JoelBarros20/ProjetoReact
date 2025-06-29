@@ -62,7 +62,7 @@ export default function WelcomeScreen() {
           />
 
           <View style={styles.textWrapper}>
-            <Text style={styles.title}>Bemvindo à</Text>
+            <Text style={styles.title}>Bem-vindo à</Text>
           </View>
         </View>
         <View style={styles.buttonWrapper}>

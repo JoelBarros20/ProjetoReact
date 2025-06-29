@@ -84,7 +84,6 @@ export default function ViaturasDetalhesScreen() {
 
   const precoTotal = calcularPrecoTotal(Number(base_price_day), Number(base_price_month), dataInicio, dataFim);
 
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }} edges={['left', 'right']}>
       <ScrollView style={styles.container}
@@ -130,7 +129,7 @@ export default function ViaturasDetalhesScreen() {
             </View>
             <View style={styles.specItem}>
               <MaterialCommunityIcons name="car-shift-pattern" size={18} color={'#111'} />
-              <Text style={styles.specText}>Caixa {transmissionMap[transmission] || transmission}</Text>
+              <Text style={styles.specText}>Tipo de transmissão {transmissionMap[transmission] || transmission}</Text>
             </View>
             <View style={styles.specItem}>
               <MaterialIcons name="location-city" size={18} color="black" />

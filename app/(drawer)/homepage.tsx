@@ -9,6 +9,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
 import { ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 import useAuthGuard from '@/hooks/useAuthGuard';
 import DatePickers from '@/components/generalComponents/homepage/DatePicker'
@@ -40,6 +42,14 @@ type Vehicle = {
 const { width, height } = Dimensions.get('window');
 
 export default function HomePageScreen() {
+
+  const [resetKey, setResetKey] = useState(0);
+
+  useFocusEffect(
+    useCallback(() => {
+      setResetKey(Date.now()); // muda o resetKey sempre que a homepage for focada
+    }, [])
+  );
 
   const router = useRouter();
 
@@ -140,21 +150,22 @@ export default function HomePageScreen() {
             <Text style={styles.TextTitle}>Aluguer de carros</Text>
             <Text style={styles.TextSubtitle}>Ótimos carros a ótimos preços</Text>
             <View style={styles.ContainerInputs}>
-              <DatePickers />
+              <DatePickers resetKey={resetKey} />
             </View>
           </LinearGradient>
         </ImageBackground>
 
         <View style={styles.ContainerOffers}>
           <View style={{ marginTop: 5 }}>
-            <Text style={styles.TextOffers}>Veiculos</Text>
-          </View>
-          <View>
             <TouchableOpacity style={styles.ContainerButtonOffers}
               onPress={() => { router.push('/(drawer)/categories/categoriespage') }} >
-              <Text style={styles.ButtonOfertas}>Ver</Text>
+              <Text style={styles.ButtonOfertas}>Ver Categorias</Text>
             </TouchableOpacity>
           </View>
+        </View>
+
+        <View style={{ paddingHorizontal: 4, marginTop: 16 }}>
+          <Text style={styles.TextOffers}>Algumas Ofertas</Text>
         </View>
 
         <View style={{ paddingHorizontal: 16 }}>
@@ -177,7 +188,10 @@ export default function HomePageScreen() {
                     <Text style={{ fontSize: 16, color: '#333' }}>{item.category_name}</Text>
                   </View>
                   <View style={styles.ContainerInsideCard}>
-                    <Text style={{ fontSize: 24, fontWeight: 'bold' }}>€{item.base_price_day}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: '500' }}>€{item.base_price_day} / Dia</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: width * 0.03 }}>
+                    <Text style={{ fontSize: 20, fontWeight: '500', }}>€{item.base_price_month} / Mês</Text>
                     <TouchableOpacity
                       style={styles.ContainerInsideButton}
                       onPress={() => router.push({
@@ -195,25 +209,24 @@ export default function HomePageScreen() {
                           doors: item.door || 'Dados Viatura',
                           stand_name: item.stand_name,
                           base_price_month: item.base_price_month,
-                          // Adiciona outros campos se necessário
                         }
                       })}
                     >
                       <Text style={{ color: '#fff', fontWeight: 'bold' }}>Ver</Text>
                     </TouchableOpacity>
                   </View>
-                </View>
+                </View >
               );
             }}
           />
-        </View>
+        </View >
 
         <View style={styles.Menu}>
           <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
             <MaterialIcons name="menu" size={30} color="#000" />
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </ScrollView >
     </View >
   );
 }

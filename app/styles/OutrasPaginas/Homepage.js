@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.055,
     marginTop: height * 0.025,
     marginRight: width * 0.03,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginBottom: height * 0.03,
   },
 
@@ -83,9 +83,9 @@ const styles = StyleSheet.create({
   ContainerButtonOffers: {
     backgroundColor: '#b30000',
     paddingVertical: height * 0.012,
-    paddingHorizontal: width * 0.04,
+    marginRight: width * 0.01,
     borderRadius: width * 0.02,
-    width: width * 0.25,
+    width: width * 0.5,
     alignItems: 'center',
   },
 
@@ -115,9 +115,6 @@ const styles = StyleSheet.create({
   },
 
   ContainerInsideCard: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     paddingHorizontal: width * 0.03,
     paddingTop: height * 0.015,
   },

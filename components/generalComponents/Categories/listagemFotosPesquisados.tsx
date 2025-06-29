@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Dimensions, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import styles from '@/app/styles/ComponentsStyles/Categories/listagemFotos';
+import styles from '@/app/styles/ComponentsStyles/Categories/listagemFotosPesquisados';
 
 const { height } = Dimensions.get('window');
 
@@ -100,51 +100,41 @@ export default function FilterModal({ photo_url, BASE_URL, from, fromSearch, dat
                                 <Text style={{ fontSize: 16, color: '#999' }}>{img.category_name}</Text>
                             </View>
                             <View style={styles.ContainerInsideCard}>
-                                {dataInicio && dataFim ? (
-                                    <View style={{}}>
+                                {dataInicio && dataFim && (
+                                    <View style={{ marginTop: 9 }}>
                                         <Text style={{ fontSize: 20, fontWeight: '500' }}>
-                                            €{precoTotal}
+                                            Valor da reserva €{precoTotal}
                                         </Text>
-                                        {/* Podes adicionar mais info aqui, ex: "Total" */}
                                     </View>
-                                ) : (
-                                    <Text style={{ fontSize: 20, fontWeight: '500' }}>
-                                        €{precoTotal}
-                                        {img.base_price_day ? <Text style={{ fontSize: 20, fontWeight: '500' }}> / Dia</Text> : null}
-                                    </Text>
                                 )}
-                            </View>
-                            {/* Se não houver datas, mostra também o preço por dia em baixo */}
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12}}>
-                                {!dataInicio && !dataFim && img.base_price_day ? (
-                                    <Text style={{ fontSize: 20, fontWeight: '500' }}>
-                                        €{img.base_price_month} / Mês
-                                    </Text>
-                                ) : null}
-                                <TouchableOpacity
-                                    style={styles.ContainerInsideButton}
-                                    onPress={() => {
-                                        const categoryKey = img.category_name;
-                                        const categorySlug = categoryMap[categoryKey] || categoryKey.toLowerCase();
-                                        router.push({
-                                            pathname: '/stack/viaturasdetalhes',
-                                            params: {
-                                                ...img,
-                                                imageBase64: img.photo_url,
-                                                features: JSON.stringify(img.features ?? []),
-                                                from: fromSearch ? from : `categories/${categorySlug}`,
-                                                fromSearch: fromSearch ? 'true' : 'false',
-                                                dataInicio,
-                                                horaInicio,
-                                                dataFim,
-                                                horaFim,
-                                                selectedStand
-                                            }
-                                        });
-                                    }}
-                                >
-                                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>Ver</Text>
-                                </TouchableOpacity>
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 4 }}>
+                                    <TouchableOpacity
+                                        style={styles.ContainerInsideButton}
+                                        onPress={() => {
+                                            const categoryKey = img.category_name;
+                                            const categorySlug = categoryMap[categoryKey] || categoryKey.toLowerCase();
+                                            router.push({
+                                                pathname: '/stack/viaturasdetalhes',
+                                                params: {
+                                                    ...img,
+                                                    imageBase64: img.photo_url,
+                                                    features: JSON.stringify(img.features ?? []),
+                                                    from: fromSearch ? from : `categories/${categorySlug}`,
+                                                    fromSearch: fromSearch ? 'true' : 'false',
+                                                    dataInicio,
+                                                    horaInicio,
+                                                    dataFim,
+                                                    horaFim,
+                                                    selectedStand,
+                                                    doors: img.door ?? '',
+                                                }
+                                            });
+                                        }}
+                                    >
+                                        <Text style={{ color: '#fff', fontWeight: 'bold' }}>Ver</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
 
