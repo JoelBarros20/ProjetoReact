@@ -76,7 +76,7 @@ export default function SeguroPage() {
                                     }}>
                                         {option.value && parseFloat(option.value) > 0
                                             ? `${parseFloat(option.value).toFixed(2)} €`
-                                            : "Inculído"}
+                                            : "Incluído"}
                                     </Text>
                                 </View>
                             </TouchableOpacity>

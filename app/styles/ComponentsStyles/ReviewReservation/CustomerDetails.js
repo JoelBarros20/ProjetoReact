@@ -16,17 +16,6 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
 
-    input: {
-        backgroundColor: '#FFF',
-        borderRadius: 10,
-        paddingVertical: 12,
-        paddingHorizontal: 16,
-        borderColor: '#000',
-        borderWidth: 1,
-        color: '#fff',
-        marginBottom: 20,
-    },
-
     fieldBlock: {
         marginBottom: 10,
     },
@@ -55,11 +44,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    
+
     ButtonOfertas: {
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 22
+    },
+
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 6,
+        padding: 12,
+        marginBottom: 8,
+        color: '#000', 
+        backgroundColor: '#fff',
     },
 
 });

@@ -201,8 +201,11 @@ export default function AnimatedPages({ resetKey }: { resetKey?: number }) {
                 <TouchableOpacity
                     style={styles.SecondContainerButton}
                     onPress={() => {
+                        if (!selectedStand || !dataInicio || !horaInicio || !dataFim || !horaFim) {
+                            Alert.alert('Campos obrigatórios', 'Preencha todas as datas, horas e localização para avançar.');
+                            return;
+                        }
                         const standName = stands.find(s => String(s.id) === selectedStand)?.name || '';
-                        console.log('Pesquisar clicado', { selectedStand, dataInicio, horaInicio, dataFim, horaFim });
                         router.push({
                             pathname: '/pesquisar_viaturas',
                             params: {

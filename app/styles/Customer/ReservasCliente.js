@@ -93,6 +93,22 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Bold',
         marginLeft: width * 0.04,
     },
+
+    ButtonCheckIn: {
+        marginTop: 12,
+        backgroundColor: '#2ecc40',
+        borderRadius: 6,
+        paddingVertical: 10,
+        alignItems: 'center'
+    },
+
+    ButtonCheckOut: {
+        marginTop: 8,
+        backgroundColor: '#e74c3c',
+        borderRadius: 6,
+        paddingVertical: 10,
+        alignItems: 'center'
+    }
 });
 
 export default styles;

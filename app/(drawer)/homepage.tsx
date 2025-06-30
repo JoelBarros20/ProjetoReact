@@ -131,6 +131,10 @@ export default function HomePageScreen() {
     );
   }
 
+  function podeAvancar() {
+    return !!(dataInicio && dataFim && horaInicio && horaFim);
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: "#FFF" }}>
 

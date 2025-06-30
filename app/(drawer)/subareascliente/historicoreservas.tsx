@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, TouchableOpacity, Text, Dimensions, FlatList, ActivityIndicator } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { Searchbar, Menu, Button, Provider } from 'react-native-paper';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { DrawerActions, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -41,8 +41,8 @@ export default function ClienteReservasPage() {
     return date.toISOString().split('T')[0];
   };
 
-  // Buscar reservas na API
-  useEffect(() => {
+  const fetchReservas = useCallback(() => {
+    setLoading(true);
     fetch(API_ROUTES.RESERVATIONS)
       .then(res => res.json())
       .then(data => {
@@ -52,6 +52,12 @@ export default function ClienteReservasPage() {
       .catch(() => setLoading(false));
   }, []);
 
+  // Buscar reservas na API
+  useFocusEffect(
+    useCallback(() => {
+      fetchReservas();
+    }, [fetchReservas])
+  );
 
   // Vai buscar o id do utilizador guardado no AsyncStorage
   useEffect(() => {
@@ -159,9 +165,6 @@ export default function ClienteReservasPage() {
             </View>
           </View>
 
-
-
-
           {/* Modal do DateTime Picker */}
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
@@ -188,26 +191,31 @@ export default function ClienteReservasPage() {
               <FlatList
                 data={reservasFiltradas}
                 keyExtractor={(item) => item.id?.toString() ?? Math.random().toString()}
-                renderItem={({ item }) => (
-                  <View style={{
-                    backgroundColor: '#fff',
-                    marginHorizontal: 16,
-                    marginVertical: 8,
-                    borderRadius: 8,
-                    padding: 16,
-                    elevation: 2
-                  }}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Reserva #{item.id}</Text>
-                    <Text>Código: {item.reservation_code ?? '-'}</Text>
-                    <Text>Cliente: {item.customer?.name}</Text>
-                    <Text>Veículo: {item.vehicle?.brand} {item.vehicle?.model}</Text>
-                    <Text>Data de Levantamento: {item.pick_up_date}</Text>
-                    <Text>Hora de Levantamento: {item.pick_up_hour}</Text>
-                    <Text>Data de Devolução: {item.drop_off_date}</Text>
-                    <Text>Hora de Devolução: {item.drop_off_hour}</Text>
-                    <Text>Status: {statusLabels[item.status] ?? item.status}</Text>
-                  </View>
-                )}
+                renderItem={({ item }) => {
+                  console.log(item);
+                  return (
+                    <View style={{
+                      backgroundColor: '#fff',
+                      marginHorizontal: 16,
+                      marginVertical: 8,
+                      borderRadius: 8,
+                      padding: 16,
+                      elevation: 2
+                    }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Reserva #{item.id}</Text>
+                      <Text>Código: {item.reservation_code ?? '-'}</Text>
+                      <Text>Cliente: {item.customer?.name}</Text>
+                      <Text>
+                        Veículo: {item.vehicle?.brand} {item.vehicle?.model}
+                      </Text>
+                      <Text>Data de Levantamento: {item.pick_up_date}</Text>
+                      <Text>Hora de Levantamento: {item.pick_up_hour}</Text>
+                      <Text>Data de Devolução: {item.drop_off_date}</Text>
+                      <Text>Hora de Devolução: {item.drop_off_hour}</Text>
+                      <Text>Status: {statusLabels[item.status] ?? item.status}</Text>
+                    </View>
+                  );
+                }}
               />
             )}
           </View>
@@ -216,22 +224,3 @@ export default function ClienteReservasPage() {
     </Provider>
   );
 }
-
-{/* Dropdown
-              <View style={{ flex: 1 }}>
-                <Menu
-                  visible={visible}
-                  onDismiss={() => setVisible(false)}
-                  anchor={
-                    <Button onPress={() => setVisible(true)} mode="outlined" textColor='#000' labelStyle={{ fontWeight: 'normal' }}
-                      style={styles.dropdownButton}>
-                      {selectedStatus || 'Selecionar estado'}
-                    </Button>
-                  }
-                >
-                  <Menu.Item onPress={() => { setSelectedStatus(''); setVisible(false); }} title="Limpar filtro" />
-                  <Menu.Item onPress={() => { setSelectedStatus('Confirmada'); setVisible(false); }} title="Confirmada" />
-                  <Menu.Item onPress={() => { setSelectedStatus('Concluída'); setVisible(false); }} title="Concluída" />
-                  <Menu.Item onPress={() => { setSelectedStatus('Pendente'); setVisible(false); }} title="Pendente" />
-                </Menu>
-              </View> */}

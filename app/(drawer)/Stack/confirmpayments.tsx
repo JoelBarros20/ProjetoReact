@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams } from 'expo-router';
@@ -15,7 +15,6 @@ import { API_ROUTES } from '@/env';
 const { width } = Dimensions.get('window');
 
 export default function ReviewAndBook() {
-
     const params = useLocalSearchParams();
     const features = Array.isArray(params.features) ? params.features[0] : params.features;
     const category_name = Array.isArray(params.category_name) ? params.category_name[0] : params.category_name;
@@ -131,7 +130,6 @@ export default function ReviewAndBook() {
     }
 
     const formatDate = (dateStr: string) => {
-        // Espera receber "2025-07-01" ou "01-07-2025"
         const d = new Date(dateStr);
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
@@ -139,13 +137,26 @@ export default function ReviewAndBook() {
     };
 
     const formatHour = (hourStr: string) => {
-        // Se já vier "09:00:00", retorna igual
         if (hourStr.length === 8) return hourStr;
-        // Se vier "09:00", adiciona ":00"
         if (hourStr.length === 5) return hourStr + ':00';
         return hourStr;
     };
 
+    const [customerData, setCustomerData] = useState<any>(null);
+
+    useEffect(() => {
+        async function fetchCustomerData() {
+            const userId = await AsyncStorage.getItem('userId');
+            if (userId) {
+                const response = await fetch(API_ROUTES.CUSTOMER_DETAILS.replace('{id}', userId));
+                const data = await response.json();
+                setCustomerData(data);
+            }
+        }
+        fetchCustomerData();
+    }, []);
+
+    console.log('customerData:', customerData);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }} edges={['left', 'right', 'bottom']}>
@@ -176,10 +187,8 @@ export default function ReviewAndBook() {
                         features={featuresArray}
                     />
                     <View>
-                        <CustomerDetails />
+                        {customerData && <CustomerDetails customerData={customerData} />}
                     </View>
-
-
                 </View>
             </ScrollView>
 

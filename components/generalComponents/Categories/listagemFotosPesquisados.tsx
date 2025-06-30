@@ -58,13 +58,40 @@ export default function FilterModal({ photo_url, BASE_URL, from, fromSearch, dat
         return diffDays;
     }
 
-    function calcularPrecoTotal(veiculo: any, dataInicio: string, dataFim: string) {
-        const dias = calcularDias(dataInicio, dataFim);
-        if (dias < 30) {
-            return dias * veiculo.base_price_day;
+    function calcularMesesEDias(dataInicio: string, dataFim: string) {
+        const inicio = new Date(dataInicio);
+        const fim = new Date(dataFim);
+        const diffTime = fim.getTime() - inicio.getTime();
+        const totalDias = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        const meses = Math.floor(totalDias / 30);
+        const dias = totalDias % 30;
+        return { meses, dias, totalDias };
+    }
+
+    function calcularPrecoTotal(veiculo: Vehicle, dataInicio: string, dataFim: string) {
+        const { meses, dias, totalDias } = calcularMesesEDias(dataInicio, dataFim);
+        if (totalDias < 30) {
+            return totalDias * veiculo.base_price_day;
         } else {
-            return veiculo.base_price_month;
+            // Usa o preço mensal real e o preço diário real
+            return (meses * (veiculo.base_price_month ?? 0)) + (dias * veiculo.base_price_day);
         }
+    }
+
+    function validarDatas(dataInicio?: string, dataFim?: string) {
+        if (!dataInicio || !dataFim) return { valido: false, mensagem: 'Selecione as datas.' };
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+        const inicio = new Date(dataInicio);
+        const fim = new Date(dataFim);
+
+        if (inicio < hoje) {
+            return { valido: false, mensagem: 'A data de levantamento não pode ser inferior à data de hoje.' };
+        }
+        if (fim < inicio) {
+            return { valido: false, mensagem: 'A data de entrega não pode ser inferior à data de levantamento.' };
+        }
+        return { valido: true, mensagem: '' };
     }
 
     return (
@@ -84,10 +111,12 @@ export default function FilterModal({ photo_url, BASE_URL, from, fromSearch, dat
                     if (!img.photo_url || typeof img.photo_url !== 'string' || !img.photo_url.trim()) {
                         return null;
                     }
-                    const precoTotal =
-                        dataInicio && dataFim
-                            ? calcularPrecoTotal(img, dataInicio, dataFim)
-                            : img.base_price_day ?? 0;
+
+                    const { valido, mensagem } = validarDatas(dataInicio, dataFim);
+                    const precoTotal = valido
+                        ? calcularPrecoTotal(img, dataInicio!, dataFim!)
+                        : img.base_price_day ?? 0;
+
                     return (
                         <View key={index} style={styles.ContainerCards}>
                             <Image source={{ uri: imageUrl }} style={styles.Image} resizeMode="cover" />
@@ -101,11 +130,19 @@ export default function FilterModal({ photo_url, BASE_URL, from, fromSearch, dat
                             </View>
                             <View style={styles.ContainerInsideCard}>
                                 {dataInicio && dataFim && (
-                                    <View style={{ marginTop: 9 }}>
-                                        <Text style={{ fontSize: 20, fontWeight: '500' }}>
-                                            Valor da reserva €{precoTotal}
-                                        </Text>
-                                    </View>
+                                    valido ? (
+                                        <View style={{ marginTop: 9 }}>
+                                            <Text style={{ fontSize: 20, fontWeight: '500' }}>
+                                                Valor da reserva €{precoTotal}
+                                            </Text>
+                                        </View>
+                                    ) : (
+                                        <View style={{ marginTop: 9 }}>
+                                            <Text style={{ fontSize: 16, color: 'red' }}>
+                                                {mensagem}
+                                            </Text>
+                                        </View>
+                                    )
                                 )}
 
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 4 }}>

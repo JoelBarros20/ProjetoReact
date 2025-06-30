@@ -43,6 +43,14 @@ const styles = StyleSheet.create({
         marginBottom: height * 0.015,
     },
 
+     SubtitleSearch: {
+        color: '#000',
+        fontSize: width * 0.045,
+        fontFamily: 'Poppins-Bold',
+        marginTop: height * 0.017,
+        marginLeft: width * 0.04,
+    },
+
     ContainerFilters: {
         flexDirection: 'row',
         justifyContent: 'space-between',

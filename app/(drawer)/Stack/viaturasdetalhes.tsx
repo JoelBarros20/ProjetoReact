@@ -125,15 +125,15 @@ export default function ViaturasDetalhesScreen() {
             </View>
             <View style={styles.specItem}>
               <MaterialCommunityIcons name="car-door" size={18} color="black" />
-              <Text style={styles.specText}>{doors} Portas </Text>
+              <Text style={styles.specText}>Nº de Portas: {doors} </Text>
             </View>
             <View style={styles.specItem}>
               <MaterialCommunityIcons name="car-shift-pattern" size={18} color={'#111'} />
-              <Text style={styles.specText}>Tipo de transmissão {transmissionMap[transmission] || transmission}</Text>
+              <Text style={styles.specText}>Tipo de transmissão: {transmissionMap[transmission] || transmission}</Text>
             </View>
             <View style={styles.specItem}>
               <MaterialIcons name="location-city" size={18} color="black" />
-              <Text style={styles.specText}>{stand_name}</Text>
+              <Text style={styles.specText}>Localização: {stand_name}</Text>
             </View>
           </View>
 
