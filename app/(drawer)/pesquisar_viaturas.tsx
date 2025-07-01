@@ -28,7 +28,7 @@ export default function PesquisarViaturas() {
     const [loading, setLoading] = useState(true);
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [stands, setStands] = useState<{ id: number, name: string }[]>([]);
-    const [modalLoading, setModalLoading] = useState(false);
+    const [reservas, setReservas] = useState<any[]>([]);
 
     const standIdStr = getParam(standId);
     const dataInicioStr = getParam(dataInicio);
@@ -143,6 +143,17 @@ export default function PesquisarViaturas() {
         setHoraFimSelecionada(horaFimStr);
     }, [standIdStr, dataInicioStr, horaInicioStr, dataFimStr, horaFimStr]);
 
+    useEffect(() => {
+        fetch(API_ROUTES.RESERVATIONS)
+            .then(res => res.json())
+            .then(data => setReservas(data))
+            .catch(() => setReservas([]));
+    }, []);
+
+    function datasSobrepoem(inicio1: string, fim1: string, inicio2: string, fim2: string) {
+        // Retorna true se os períodos [inicio1, fim1] e [inicio2, fim2] se sobrepõem
+        return !(new Date(fim1) < new Date(inicio2) || new Date(fim2) < new Date(inicio1));
+    }
 
 
     // Filtros aplicados sobre os veículos do stand
@@ -178,6 +189,22 @@ export default function PesquisarViaturas() {
         const doorsOk =
             !doorOption ||
             img.door?.toString() === doorOption;
+
+        if (dataInicioSelecionada && dataFimSelecionada) {
+            const reservasDoVeiculo = reservas.filter(r =>
+                r.vehicle?.id === img.id &&
+                [1, 2].includes(r.status) // 1: pendente, 2: confirmada
+            );
+            const existeConflito = reservasDoVeiculo.some(r =>
+                datasSobrepoem(
+                    dataInicioSelecionada,
+                    dataFimSelecionada,
+                    r.pick_up_date,
+                    r.drop_off_date
+                )
+            );
+            if (existeConflito) return false;
+        }
 
         return (
             transmissionOk &&

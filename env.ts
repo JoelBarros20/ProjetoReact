@@ -1,7 +1,7 @@
 // Ficheiro env para colocar variáveis sensiveis 
 
 // IP e Porta 
-const LOCAL_IP = "192.168.1.83";
+const LOCAL_IP = "192.168.1.86";
 const PORT = "8000";
 
 // Construção do URL com o IP e a Porta
@@ -25,6 +25,7 @@ export const API_ROUTES = {
   ANOMALIESTYPES: `${BASE_URL}/api/anomaliesTypes`,
   ANOMALIES: `${BASE_URL}/api/anomaliespost`,
   CUSTOMER_DETAILS: `${BASE_URL}/api/customer/{id}`,
+  PAYEMENTS: `${BASE_URL}/api/payments`,
 
 };
 

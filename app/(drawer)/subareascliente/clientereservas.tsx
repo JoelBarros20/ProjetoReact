@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, TouchableOpacity, Text, Dimensions, FlatList, ActivityIndicator, Modal, TextInput, Alert } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import { Searchbar, Menu, Button, Provider } from 'react-native-paper';
+import { Searchbar, Provider } from 'react-native-paper';
 import { DrawerActions, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
@@ -83,6 +83,12 @@ export default function ClienteReservasPage() {
       .catch(() => setAnomaliasTipos([]));
   }, []);
 
+  useEffect(() => {
+    if (reservaCheckin) {
+      console.log('DEBUG reservaCheckin:', reservaCheckin);
+    }
+  }, [reservaCheckin]);
+
   if (userId === null) {
     return (
       <Provider>
@@ -126,10 +132,12 @@ export default function ClienteReservasPage() {
       return;
     }
     await atualizarReservaCheckin();
+    await criarPagamento(reservaCheckin);
     setCheckinModalVisible(false);
     setAnomalias('');
     setReservaCheckin(null);
     setAnomaliaTipoSelecionada('');
+
     Alert.alert('Sucesso', 'Check-in realizado com sucesso!');
   };
 
@@ -231,6 +239,62 @@ export default function ClienteReservasPage() {
     );
   }
 
+  interface Reserva {
+    id: number;
+    total_days?: number;
+    pick_up_date?: string;
+    drop_off_date?: string;
+    vehicle?: {
+      base_price_day?: number;
+      id?: number;
+      brand?: string;
+      model?: string;
+    };
+    insurance?: {
+      value?: number;
+      id?: number;
+      name?: string;
+    };
+  }
+
+  async function criarPagamento(reserva: Reserva) {
+    // Converte os valores para número
+    const precoViatura = Number(reserva.vehicle?.base_price_day) || 0;
+    const precoSeguro = Number(reserva.insurance?.value) || 0;
+
+    // Calcula o número de dias corretamente
+    let dias = Number(reserva.total_days);
+    if (!dias || isNaN(dias)) {
+      if (reserva.pick_up_date && reserva.drop_off_date) {
+        const d1 = new Date(reserva.pick_up_date);
+        const d2 = new Date(reserva.drop_off_date);
+        dias = Math.max(1, Math.round((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24)));
+      } else {
+        dias = 1;
+      }
+    }
+
+    const valorTotal = precoViatura * dias + precoSeguro;
+
+    const hoje = new Date().toISOString().split('T')[0];
+
+    const pagamentoBody = {
+      payment_date: hoje,
+      value: valorTotal,
+      reservation_id: reserva.id,
+    };
+
+    try {
+      await fetch(API_ROUTES.PAYEMENTS, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pagamentoBody),
+      });
+    } catch (error) {
+      console.log('Erro ao criar pagamento:', error);
+    }
+  }
+
   return (
     <Provider>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -255,7 +319,6 @@ export default function ClienteReservasPage() {
               <View style={{ flex: 1 }}>
                 <View style={[styles.FirstDateTimePicker, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10 }]}>
                   <FontAwesome name="calendar" size={20} color="#000" />
-
                   <TouchableOpacity
                     style={{ flex: 1, marginLeft: 8 }}
                     activeOpacity={0.8}
@@ -265,7 +328,6 @@ export default function ClienteReservasPage() {
                       {dataPesquisa || 'Selecione uma data'}
                     </Text>
                   </TouchableOpacity>
-
                   {dataPesquisa && (
                     <TouchableOpacity onPress={() => setDataPesquisa(null)}>
                       <FontAwesome name="close" size={18} color="#999" />
@@ -274,23 +336,51 @@ export default function ClienteReservasPage() {
                 </View>
               </View>
 
-              {/* Dropdown */}
-              <View style={{ flex: 1 }}>
-                <Menu
-                  visible={visible}
-                  onDismiss={() => setVisible(false)}
-                  anchor={
-                    <Button onPress={() => setVisible(true)} mode="outlined" textColor='#000' labelStyle={{ fontWeight: 'normal' }}
-                      style={styles.dropdownButton}>
-                      {selectedStatus || 'Selecionar estado'}
-                    </Button>
-                  }
-                >
-                  <Menu.Item onPress={() => { setSelectedStatus(''); setVisible(false); }} title="Limpar filtro" />
-                  <Menu.Item onPress={() => { setSelectedStatus('Confirmada'); setVisible(false); }} title="Confirmada" />
-                  <Menu.Item onPress={() => { setSelectedStatus('Concluída'); setVisible(false); }} title="Concluída" />
-                  <Menu.Item onPress={() => { setSelectedStatus('Pendente'); setVisible(false); }} title="Pendente" />
-                </Menu>
+              {/* Dropdown de estado com RNPickerSelect */}
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                <RNPickerSelect
+                  modalProps={{
+                    presentationStyle: 'overFullScreen',
+                  }}
+                  onValueChange={value => setSelectedStatus(value)}
+                  value={selectedStatus}
+                  placeholder={{ label: 'Selecionar estado', value: '' }}
+                  items={[
+                    { label: 'Pendente', value: 'Pendente' },
+                    { label: 'Confirmada', value: 'Confirmada' },
+                    { label: 'Concluída', value: 'Concluída' },
+                  ]}
+                  style={{
+                    inputIOS: {
+                      color: '#222',
+                      fontSize: 16,
+                      backgroundColor: '#fff',
+                      borderColor: '#000',
+                      borderWidth: 1,
+                      borderRadius: 6,
+                      paddingVertical: 10,
+                      paddingHorizontal: 12,
+                      paddingRight: 36,
+                    },
+                    inputAndroid: {
+                      color: '#222',
+                      fontSize: 16,
+                      backgroundColor: '#eee',
+                      borderRadius: 6,
+                      paddingVertical: 14,
+                      paddingHorizontal: 12,
+                      paddingRight: 36,
+                    },
+                    iconContainer: {
+                      top: 10,
+                      right: 16,
+                    },
+                  }}
+                  useNativeAndroidPickerStyle={false}
+                  Icon={() => (
+                    <MaterialIcons name="arrow-drop-down" size={24} color="#888" />
+                  )}
+                />
               </View>
             </View>
           </View>
@@ -349,6 +439,7 @@ export default function ClienteReservasPage() {
                       <TouchableOpacity
                         style={styles.ButtonCheckIn}
                         onPress={() => {
+
                           setReservaCheckin(item);
                           setCheckinModalVisible(true);
                         }}
