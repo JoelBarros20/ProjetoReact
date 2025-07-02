@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -99,7 +99,7 @@ export default function ReviewAndBook() {
                 reservation_code: null
             };
 
-            console.log('Dados enviados para reserva:', dadosReserva);
+            // console.log('Dados enviados para reserva:', dadosReserva);
 
             const response = await fetch(API_ROUTES.RESERVE_POST, {
                 method: 'POST',
@@ -111,10 +111,10 @@ export default function ReviewAndBook() {
             });
 
             const responseText = await response.text();
-            console.log('Resposta do servidor:', responseText);
+            // console.log('Resposta do servidor:', responseText);
 
             if (response.ok) {
-                alert('Reserva efetuada com sucesso!');
+                Alert.alert('Sucesso','Reserva efetuada com sucesso!');
                 router.replace({ pathname: '/homepage', params: { reload: Date.now() } });
             } else {
                 alert('Erro ao efetuar reserva: ' + responseText);

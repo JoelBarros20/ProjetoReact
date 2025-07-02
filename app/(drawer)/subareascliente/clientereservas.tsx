@@ -365,7 +365,7 @@ export default function ClienteReservasPage() {
                     inputAndroid: {
                       color: '#222',
                       fontSize: 16,
-                      backgroundColor: '#eee',
+                      backgroundColor: '#fff',
                       borderRadius: 6,
                       paddingVertical: 14,
                       paddingHorizontal: 12,
@@ -510,7 +510,9 @@ export default function ClienteReservasPage() {
                     inputIOS: {
                       color: '#222',
                       fontSize: 16,
-                      backgroundColor: '#eee',
+                      backgroundColor: '#fff',
+                      borderColor: '#000',
+                      borderWidth: 1,
                       borderRadius: 6,
                       paddingVertical: 14,
                       paddingHorizontal: 12,
@@ -602,7 +604,9 @@ export default function ClienteReservasPage() {
                     inputIOS: {
                       color: '#222',
                       fontSize: 16,
-                      backgroundColor: '#eee',
+                      backgroundColor: '#fff',
+                      borderColor: '#000',
+                      borderWidth: 1,
                       borderRadius: 6,
                       paddingVertical: 14,
                       paddingHorizontal: 12,

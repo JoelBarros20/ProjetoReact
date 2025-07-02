@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ImageBackground, Dimensions, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Checkbox } from 'react-native-paper';
 import { useFonts } from 'expo-font';
@@ -30,7 +30,7 @@ export default function LoginScreen() {
   // Caso o utilizador não preencha os campos todos, surge um aviso
   const handleLogin = async () => {
     if (!username || !password) {
-      alert("Preencha todos os campos");
+      Alert.alert('Erro', "Preencha todos os campos");
       return;
     }
 
